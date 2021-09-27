@@ -7,7 +7,7 @@ function App() {
         <h1 className='text-red-800 text-9xl font-bold'>hi</h1>
       </div>
     </div>
-  );
+  ); 
 }
 
 export default App;
