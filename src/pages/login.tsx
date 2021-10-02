@@ -2,39 +2,41 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { isLoggedInVar } from '../apollo';
 
-interface IForm{
-    email: string
-    password: string
+interface IForm {
+    email: string;
+    password: string;
+    role: string;
 }
 
 export const Login = () => {
     const onClick = () => {
-        isLoggedInVar(true)
+        isLoggedInVar(true);
     }
 
-    const {watch, formState:{errors}, handleSubmit, register} = useForm<IForm>()
+    const {watch, getValues, handleSubmit, register} = useForm<IForm>()
+
     const onSubmit = () => {
-        console.log(watch())
+        console.log(getValues())
     }
 
     return(
-        <div className='h-screen flex items-center justify-center bg-gray-800'>
-          <div className='w-full max-w-lg bg-white py-10 rounded-lg'>
-              <h3 className='font-bold text-center text-2xl text-gray-800'>Log In</h3>
-           <form onSubmit={handleSubmit(onSubmit)} className='flex flex-col mt-5 px-5'>
-                   <input {...register("email", {required: true, pattern: /^[A-Za-z0-9._%+-]+@gmail.com$/})}
-                          type="email"
-                          placeholder="example@email.com"
-                          className='bg-gray-100 py-2 focus:outline-none rounded-lg shadow-inner px-3 mb-3 border-2 focus:border-indigo-500 border-opacity-60'
-                   />
-                   <input {...register("password", {required: true})}
-                          type="password"
-                          placeholder="password"
-                          className='bg-gray-100 py-2 focus:outline-none rounded-lg shadow-inner px-3 mb-3 border-2 focus:border-indigo-500 border-opacity-60'
-                   />
-               <button onClick={onClick} className='bg-purple-500 text-white hover:bg-purple-700 rounded-lg py-3 text-lg focus:outline-none'>Submit</button>
-           </form>
-          </div>
+        <div className='bg-gray-700 h-screen flex justify-center items-center'>
+            <div className='w-full max-w-lg rounded-lg bg-white text-center py-10'>
+                <h3 className='font-semibold text-2xl mb-5'>Log In</h3>
+                <form className='flex flex-col px-5 py-3' onSubmit={handleSubmit(onSubmit)}>
+                    <input
+                     {...register("email", {required: true})}
+                     placeholder="example@emaple.com"
+                     className="px-5 py-3 mb-3 shadow-inner bg-gray-100 border-2 focus:border-indigo-700 focus:border-opacity-50 focus:outline-none rounded-lg "
+                    />
+                    <input
+                     {...register("password", {required: true})}
+                     placeholder="password"
+                     className="px-5 py-3 mb-3 shadow-inner bg-gray-100 border-2 focus:border-indigo-700 focus:border-opacity-50 focus:outline-none rounded-lg "
+                    />
+                    <button onClick={onClick} className='bg-indigo-600 hover:bg-indigo-700 text-lg text-white font-normal mt-2 py-3 rounded-lg focus:outline-none'>Log In</button>
+                </form>
+            </div>
         </div>
     )
 }
