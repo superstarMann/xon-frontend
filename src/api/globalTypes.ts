@@ -7,6 +7,17 @@
 // START Enums and Input Objects
 //==============================================================
 
+export enum UserRole {
+  Guader = "Guader",
+  User = "User",
+}
+
+export interface CreateAccountInput {
+  email: string;
+  password: string;
+  role: UserRole;
+}
+
 export interface LoginInput {
   email: string;
   password: string;

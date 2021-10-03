@@ -6,6 +6,7 @@ import { FormError } from '../component/formerror';
 import { loginMutation, loginMutationVariables } from '../api/loginMutation';
 import { Button } from '../component/button';
 import { Link } from 'react-router-dom';
+import Helmet from 'react-helmet';
 
 const LOGIN_MUTATION = gql`
  mutation loginMutation($loginInput: LoginInput!){
@@ -48,9 +49,12 @@ export const Login = () => {
     
     return(
         <div className='lg:bg-gray-700 lg:h-screen flex flex-col items-center lg:justify-center'>
+            <Helmet>
+                <title>Login | xon</title>
+            </Helmet>
             <div className='w-full max-w-screen-sm flex flex-col items-center px-5 mt-10 lg:mb-10'>
-                <h2 className='font-semibold mb-10 text-4xl lg:text-white'>Logo</h2>
-                <h4 className='w-full font-mediumx text-left mb-3 text-2xl lg:text-white'>Welcome Back</h4>
+                <h2 className='font-semibold mb-5 text-3xl lg:text-white'>Logo</h2>
+                <h4 className='w-full font-medium text-left mb-3 text-xl lg:text-white'>Welcome Back</h4>
                 <form className='grid gap-3 py-3 w-full' onSubmit={handleSubmit(onSubmit)}> 
                     <input
                      {...register("email", {required: `Email is required`})}
