@@ -1,16 +1,43 @@
 import React from 'react';
-import { isLoggedInVar } from '../apollo';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { ShareMusles } from '../pages/client/sharemusle';
+import { NotFound } from '../pages/404';
+import { Header } from '../component/header';
+import { useMe } from '../usehook/useMe';
+import { Profile } from '../pages/client/profile';
+import { ConfirmEmail } from '../pages/user/confirm';
+
+const ClientRoutes = [
+    <Route key={1} path='/' exact>
+        <ShareMusles/>
+    </Route>,
+    <Route key={2} path='/profile' exact>
+        <Profile/>
+    </Route>,
+    <Route key={3} path='/confirm' exact>
+        <ConfirmEmail/>
+    </Route>
+]
 
 export const LoggedInRouter = () => {
-
-    const onClick = () => {
-        isLoggedInVar(false)
+    const {data, error, loading} = useMe()
+    if(!data || loading || error){
+        return(
+            <div className='h-screen flex justify-center items-center lg:bg-gray-700'>
+                <span className='text-2xl font-semibold tracking-wide lg:text-white'>Loading...</span>
+            </div>
+        )
     }
 
     return(
-        <div className='mx-auto max-w-screen-md'>
-        <h1>Logged In Screen</h1>
-        <button onClick={onClick}>Click</button>
-        </div>
+        <Router>
+            <Header/>
+            <Switch>
+                {data.me.role === "User" && ClientRoutes}
+                <Route>
+                    <NotFound/>
+                </Route>
+            </Switch>
+        </Router>
     )
 }

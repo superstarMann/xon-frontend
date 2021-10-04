@@ -6,7 +6,12 @@ import { FormError } from '../component/formerror';
 import { loginMutation, loginMutationVariables } from '../api/loginMutation';
 import { Button } from '../component/button';
 import { Link } from 'react-router-dom';
-import Helmet from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
+import { authTokenVar, isLoggedInVar } from '../apollo';
+import { LOCALSTORAGE_TOKEN } from '../constant';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUser } from '@fortawesome/free-regular-svg-icons';
+import { faGg } from '@fortawesome/free-brands-svg-icons';
 
 const LOGIN_MUTATION = gql`
  mutation loginMutation($loginInput: LoginInput!){
@@ -27,8 +32,12 @@ interface IForm {
 export const Login = () => {
     const { getValues, handleSubmit, register, formState:{errors, isValid}} = useForm<IForm>({mode: 'onChange'})
     const onCompleted = (data:loginMutation) => {
-        const {login: {ok, error, token}} = data;
-        console.log(token)
+        const {login: {ok, token}} = data;
+        if(ok && token){
+            localStorage.setItem(LOCALSTORAGE_TOKEN, token);
+            authTokenVar(token);
+            isLoggedInVar(true)
+        }
     }
     const [loginMutation, {data: loginMutationResult, loading}] = useMutation<loginMutation, loginMutationVariables>(LOGIN_MUTATION, {
         onCompleted
@@ -53,8 +62,8 @@ export const Login = () => {
                 <title>Login | xon</title>
             </Helmet>
             <div className='w-full max-w-screen-sm flex flex-col items-center px-5 mt-10 lg:mb-10'>
-                <h2 className='font-semibold mb-5 text-3xl lg:text-white'>Logo</h2>
-                <h4 className='w-full font-medium text-left mb-3 text-xl lg:text-white'>Welcome Back</h4>
+                <FontAwesomeIcon icon={faGg} className='mb-5 text-5xl lg:text-white'/>
+                <h4 className='w-full font-medium text-left mb-3 text-xl lg:text-white'>Welcome!</h4>
                 <form className='grid gap-3 py-3 w-full' onSubmit={handleSubmit(onSubmit)}> 
                     <input
                      {...register("email", {required: `Email is required`})}
