@@ -8,7 +8,7 @@ import { Button } from '../component/button';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { authTokenVar, isLoggedInVar } from '../apollo';
-import { LOCALSTORAGE_TOKEN } from '../constant';
+import { LOCALSTORAGE_TOKEN, PATTERN } from '../constant';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser } from '@fortawesome/free-regular-svg-icons';
 import { faGg } from '@fortawesome/free-brands-svg-icons';
@@ -66,7 +66,7 @@ export const Login = () => {
                 <h4 className='w-full font-medium text-left mb-3 text-xl lg:text-white'>Welcome!</h4>
                 <form className='grid gap-3 py-3 w-full' onSubmit={handleSubmit(onSubmit)}> 
                     <input
-                     {...register("email", {required: `Email is required`})}
+                     {...register("email", {required: `Email is required`, pattern: PATTERN})}
                      placeholder="example@emaple.com"
                      type="email"
                      className="input" 

@@ -8,7 +8,7 @@
     @apply text-red-500 font-semibold lg:text-yellow-200 w-full text-left mb-1
 }
 .button{
-    @apply text-lg text-white font-normal py-3 rounded-lg focus:outline-none transition
+    @apply text-white font-normal rounded-lg focus:outline-none transition
 }
 
 @tailwind utilities;

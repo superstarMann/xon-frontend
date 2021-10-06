@@ -8,6 +8,7 @@ import { FormError } from '../component/formerror'
 import { useMutation } from '@apollo/client'
 import { createAccountMutation, createAccountMutationVariables } from '../api/createAccountMutation'
 import { Helmet } from 'react-helmet-async'
+import { PATTERN } from '../constant'
 
 
 const CREATE_ACCOUNT_MUTATION = gql`
@@ -71,7 +72,7 @@ export const CreateAccount = () => {
                      className='input' 
                      placeholder='example@example.com'
                      type='email'
-                     {...register('email',{required: 'Email is required'})}/>
+                     {...register('email',{required: 'Email is required', pattern: PATTERN})}/>
                      {errors.email?.message && (
                          <FormError errorMessage={errors.email.message}/>
                      )}

@@ -222,6 +222,13 @@ export interface CreateAccountInput {
   countrySelect?: CountrySelect | null;
 }
 
+export interface EditProfileInput {
+  email?: string | null;
+  password?: string | null;
+  role?: UserRole | null;
+  countrySelect?: CountrySelect | null;
+}
+
 export interface LoginInput {
   email: string;
   password: string;

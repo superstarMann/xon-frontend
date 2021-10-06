@@ -4,14 +4,14 @@ import { ShareMusles } from '../pages/client/sharemusle';
 import { NotFound } from '../pages/404';
 import { Header } from '../component/header';
 import { useMe } from '../usehook/useMe';
-import { Profile } from '../pages/client/profile';
-import { ConfirmEmail } from '../pages/user/confirm';
+import { Profile } from '../pages/user/profile';
+import { ConfirmEmail } from '../pages/user/confirm-email';
 
 const ClientRoutes = [
     <Route key={1} path='/' exact>
         <ShareMusles/>
     </Route>,
-    <Route key={2} path='/profile' exact>
+    <Route key={2} path='/edit-profile' exact>
         <Profile/>
     </Route>,
     <Route key={3} path='/confirm' exact>

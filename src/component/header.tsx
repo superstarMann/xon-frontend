@@ -20,7 +20,7 @@ export const Header = () =>{
                 <Link to='/'>
                    <FontAwesomeIcon icon={faGg} className='text-2xl'/>
                 </Link>
-                <Link to='/profile'>
+                <Link to='/edit-profile'>
                    <FontAwesomeIcon icon={faUser} className='text-2xl'/>
                 </Link>
             </div>
