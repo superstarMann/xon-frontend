@@ -4,6 +4,7 @@ import gql from 'graphql-tag';
 import { verifyEmailMutation, verifyEmailMutationVariables } from '../../api/verifyEmailMutation';
 import { useMe } from '../../usehook/useMe';
 import { useHistory } from 'react-router';
+import { Helmet } from 'react-helmet-async';
 
 const VERIFYEMAIL_MUTATION = gql`
  mutation verifyEmailMutation($input:VerifyEmailInput!){
@@ -15,6 +16,7 @@ const VERIFYEMAIL_MUTATION = gql`
 `
 
 export const ConfirmEmail = () => {
+    const history = useHistory();
     const { data: userData } = useMe();
     const client = useApolloClient();
     const onCompleted = (data: verifyEmailMutation) => {
@@ -33,6 +35,7 @@ export const ConfirmEmail = () => {
             verified: true,
           },
         });
+        history.push('/');
       }
     };
     const [verifyEmail] = useMutation<verifyEmailMutation, verifyEmailMutationVariables>(
@@ -50,10 +53,11 @@ export const ConfirmEmail = () => {
           },
         },
       });
-    }, []);
+    }, [verifyEmail]);
 
     return(
             <div className='lg:bg-gray-700 text-white h-screen flex flex-col justify-center items-center pb-28'>
+              <Helmet><title>confirm email | xon</title></Helmet>
                 <h2 className='text-lg mb-2 font-semibold'>Confirming email...</h2>
                 <h4 className='text-base'>Please wait, don't close this page...</h4>
             </div>

@@ -1,6 +1,6 @@
-import { useMutation } from '@apollo/client';
-import gql from 'graphql-tag';
 import React from 'react';
+import { useApolloClient, useMutation } from '@apollo/client';
+import gql from 'graphql-tag';
 import { useForm } from 'react-hook-form';
 import { editProfile, editProfileVariables } from '../../api/editProfile';
 import { UserRole } from '../../api/globalTypes';
@@ -9,6 +9,7 @@ import { Button } from '../../component/button';
 import { FormError } from '../../component/formerror';
 import { LOCALSTORAGE_TOKEN, PATTERN } from '../../constant';
 import { useMe } from '../../usehook/useMe';
+import { Helmet } from 'react-helmet';
 
 const EDIT_PROFILE_MUTATION = gql`
  mutation editProfile($input: EditProfileInput!){
@@ -29,6 +30,7 @@ export const Profile = () => {
         isLoggedInVar(false);
         localStorage.removeItem(LOCALSTORAGE_TOKEN)
     }
+    const client = useApolloClient();
     const {data: userData} = useMe();
     const onCompleted=(data:editProfile)=>{
         const {
@@ -36,14 +38,30 @@ export const Profile = () => {
                 ok
             }
         } = data;
-        if(ok){
-
+        if(ok && userData){
+            const {me:{email: prevEmail}} = userData;
+            const {email: newEmail} = getValues();
+            if(prevEmail !== newEmail){
+                client.writeFragment({
+                    id:`User:${userData.me.id}`,
+                    fragment:gql`
+                    fragment EditedUser on User {
+                        verified
+                        email
+                    }
+                    `,
+                    data:{
+                        email: newEmail,
+                        verified: false
+                    }
+                })
+            }
         }
     }
     const [editProfileMutation, {data, loading}] = useMutation<editProfile, editProfileVariables>(EDIT_PROFILE_MUTATION,{
         onCompleted
     });
-    const {register, handleSubmit, formState:{errors, isValid}, getValues, watch} = useForm<IFormProps>({
+    const {register, handleSubmit, formState:{errors, isValid}, getValues } = useForm<IFormProps>({
         mode:'onChange', 
         defaultValues:{
            email: userData?.me.email,
@@ -64,6 +82,7 @@ export const Profile = () => {
     return(
         <div className='h-screen lg:bg-gray-700 flex flex-col lg:justify-center items-center'>
            <div className='w-full max-w-screen-sm flex flex-col items-center lg:mb-32'>
+               <Helmet><title>edit-profile | xon</title></Helmet>
              <h2 className='lg:text-white text-3xl font-semibold mb-6'>Edit Your Profile</h2>
              <form className='w-full grid gap-3 px-5' onSubmit={handleSubmit(onSubmit)}>
               <input

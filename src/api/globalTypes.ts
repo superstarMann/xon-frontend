@@ -234,6 +234,10 @@ export interface LoginInput {
   password: string;
 }
 
+export interface ShareMuslesInput {
+  page?: number | null;
+}
+
 export interface VerifyEmailInput {
   code: string;
 }
