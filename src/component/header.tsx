@@ -1,18 +1,24 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { faGg } from '@fortawesome/free-brands-svg-icons';
 import { faUser } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Link } from 'react-router-dom';
 import { useMe } from '../usehook/useMe';
 export const Header = () =>{
+    useEffect(() => {
+        const sayHi=()=>{
+            alert('XON AI finished your email!');
+        }
+        setTimeout(sayHi, 60000);
+    },[])
     const {data} = useMe();
     return(
         <>
         {!data?.me.verified && (
             <div className='bg-yellow-50 flex justify-center py-3 items-center'>
-                <Link to='/confirm'>
-                <span className='text-blue-600 text-xs font-semibold'>Please verify your email.</span>
-                </Link>
+                <span className='text-blue-600 text-xs font-semibold'>
+                    XON AI is checking your email
+                    </span>
             </div>
         )}
         <div className='lg:bg-gray-700'>
@@ -28,3 +34,9 @@ export const Header = () =>{
         </>
     )
 }
+/*
+<Link to='/confirm'>
+<span className='text-blue-600 text-xs font-semibold'>
+                    Please check your Email
+                    </span>
+</Link>*/
