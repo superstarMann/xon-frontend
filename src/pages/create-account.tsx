@@ -63,7 +63,7 @@ export const CreateAccount = () => {
 
     return(
         <div className='lg:bg-gray-700 lg:h-screen flex flex-col items-center justify-center'>
-            <Helmet><title>create-account | xon</title></Helmet>
+            <Helmet><title>create-account | XON</title></Helmet>
             <div className='w-full max-w-screen-sm flex flex-col items-center px-5 mt-10 lg:mb-10'>
                 <h3 className='lg:text-white font-semibold text-3xl mb-5'>Create Account</h3>
                 <h4 className='lg:text-white font-medium w-full text-left text-xl mb-3'>Let's get Start!</h4>

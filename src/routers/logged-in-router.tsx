@@ -1,21 +1,29 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import { ShareMusles } from '../pages/client/sharemusle';
+import { ShareMusles } from '../pages/client/sharemusles';
 import { NotFound } from '../pages/404';
 import { Header } from '../component/header';
 import { useMe } from '../usehook/useMe';
 import { Profile } from '../pages/user/profile';
 import { ConfirmEmail } from '../pages/user/confirm-email';
+import { Search } from '../pages/client/search';
+import { Country } from '../pages/client/country';
 
 const ClientRoutes = [
     <Route key={1} path='/' exact>
         <ShareMusles/>
     </Route>,
-    <Route key={2} path='/edit-profile' exact>
+    <Route key={2} path='/edit-profile'>
         <Profile/>
     </Route>,
-    <Route key={3} path='/confirm' exact>
+    <Route key={3} path='/confirm'>
         <ConfirmEmail/>
+    </Route>,
+    <Route key={4} path='/search'>
+        <Search/>
+    </Route>,
+    <Route key={5} path='/country/:slug'>
+        <Country/>
     </Route>
 ]
 

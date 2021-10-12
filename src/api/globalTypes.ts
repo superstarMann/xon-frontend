@@ -215,6 +215,11 @@ export enum UserRole {
   User = "User",
 }
 
+export interface CountryInput {
+  page?: number | null;
+  slug: string;
+}
+
 export interface CreateAccountInput {
   email: string;
   password: string;
@@ -232,6 +237,11 @@ export interface EditProfileInput {
 export interface LoginInput {
   email: string;
   password: string;
+}
+
+export interface SearchShareMusleInput {
+  page?: number | null;
+  query: string;
 }
 
 export interface ShareMuslesInput {

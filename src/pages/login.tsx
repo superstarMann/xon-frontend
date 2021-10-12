@@ -59,7 +59,7 @@ export const Login = () => {
     return(
         <div className='lg:bg-gray-700 lg:h-screen flex flex-col items-center lg:justify-center'>
             <Helmet>
-                <title>Login | xon</title>
+                <title>Login | XON</title>
             </Helmet>
             <div className='w-full max-w-screen-sm flex flex-col items-center px-5 mt-10 lg:mb-10'>
                 <FontAwesomeIcon icon={faGg} className='mb-5 text-5xl lg:text-white'/>

@@ -57,7 +57,7 @@ export const ConfirmEmail = () => {
 
     return(
             <div className='lg:bg-gray-700 text-white h-screen flex flex-col justify-center items-center pb-28'>
-              <Helmet><title>confirm email | xon</title></Helmet>
+              <Helmet><title>confirm email | XON</title></Helmet>
                 <h2 className='text-lg mb-2 font-semibold'>Confirming email...</h2>
                 <h4 className='text-base'>Please wait, don't close this page...</h4>
             </div>

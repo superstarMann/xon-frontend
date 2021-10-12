@@ -11,4 +11,8 @@
     @apply text-white font-normal rounded-lg focus:outline-none transition
 }
 
+.searchInput{
+    @apply rounded-lg text-center border-2 lg:border-0 py-3 px-5 w-9/12 lg:w-3/12 focus:outline-none focus:ring-indigo-600 focus:ring-opacity-40
+}
+
 @tailwind utilities;

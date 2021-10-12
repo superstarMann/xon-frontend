@@ -5,6 +5,9 @@ module.exports = {
   darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {
+      fontFamily:{
+        sans:['"PT Sans"', 'sans-serif']
+      },
       colors:{
         fuchsia: colors.fuchsia
       }
