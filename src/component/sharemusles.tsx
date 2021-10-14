@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 interface ISharemusleProps{
     id: string;
@@ -10,6 +11,7 @@ interface ISharemusleProps{
 
 export const ShareMusle:React.FC<ISharemusleProps> = ({name, coverImg, countryName ,id, address}) => {
     return(
+        <Link to={`/shareMusle/${id}`}>
         <div className='flex flex-col'>
             <div style={{backgroundImage: `url(${coverImg})`}}
              className='bg-red-500 rounded-lg py-24'></div>
@@ -21,5 +23,6 @@ export const ShareMusle:React.FC<ISharemusleProps> = ({name, coverImg, countryNa
                 {countryName} 
              </span>
         </div>
+        </Link>
     )
 }

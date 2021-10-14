@@ -8,23 +8,48 @@ import { Profile } from '../pages/user/profile';
 import { ConfirmEmail } from '../pages/user/confirm-email';
 import { Search } from '../pages/client/search';
 import { Country } from '../pages/client/country';
+import { ShareMusle } from '../pages/client/sharemusle';
+import { MyShareMusles } from '../pages/owner/sharemusles';
+import { AddShareMusle } from '../pages/owner/add-sharemusle';
 
-const ClientRoutes = [
-    <Route key={1} path='/' exact>
-        <ShareMusles/>
-    </Route>,
-    <Route key={2} path='/edit-profile'>
-        <Profile/>
-    </Route>,
-    <Route key={3} path='/confirm'>
-        <ConfirmEmail/>
-    </Route>,
-    <Route key={4} path='/search'>
-        <Search/>
-    </Route>,
-    <Route key={5} path='/country/:slug'>
-        <Country/>
-    </Route>
+const clientRoutes = [
+    {
+        path: '/',
+        component: <ShareMusles/>
+    },
+    {
+        path: '/search',
+        component: <Search/>
+    },
+    {
+        path: '/country/:slug',
+        component: <Country/>
+    },
+    {
+        path: '/shareMusle/:id',
+        component: <ShareMusle/>
+    },
+]
+
+const commonRoutes = [
+    {
+        path:'/edit-profile',
+        component:<Profile/>
+    },
+    {
+        path:'/confirm',
+        component:<ConfirmEmail/>
+    }
+];
+
+const guaderRoutes = [
+    {
+        path:'/',
+        component:<MyShareMusles/>
+    },{
+        path:'/add-sharemusle',
+        component:<AddShareMusle/>
+    }
 ]
 
 export const LoggedInRouter = () => {
@@ -41,7 +66,15 @@ export const LoggedInRouter = () => {
         <Router>
             <Header/>
             <Switch>
-                {data.me.role === "User" && ClientRoutes}
+                {data.me.role === "User" && clientRoutes.map((route) => (
+                    <Route exact key={route.path} path={route.path}>{route.component}</Route>
+                ))}
+                {data.me.role === "Guader" && guaderRoutes.map((route) =>(
+                    <Route exact key={route.path} path={route.path}>{route.component}</Route>
+                ))}
+                {commonRoutes.map((route) => (
+                    <Route exact key={route.path} path={route.path}>{route.component}</Route>
+                ))}
                 <Route>
                     <NotFound/>
                 </Route>

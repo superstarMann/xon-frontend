@@ -244,6 +244,10 @@ export interface SearchShareMusleInput {
   query: string;
 }
 
+export interface ShareMusleInput {
+  shareMusleId: number;
+}
+
 export interface ShareMuslesInput {
   page?: number | null;
 }
