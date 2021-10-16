@@ -9,7 +9,8 @@ module.exports = {
         sans:['"PT Sans"', 'sans-serif']
       },
       colors:{
-        fuchsia: colors.fuchsia
+        fuchsia: colors.fuchsia,
+        lime: colors.lime
       }
     },
   },

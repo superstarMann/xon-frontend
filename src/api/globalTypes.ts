@@ -227,6 +227,13 @@ export interface CreateAccountInput {
   countrySelect?: CountrySelect | null;
 }
 
+export interface CreateShareMusleInput {
+  name: string;
+  address: string;
+  coverImg: string;
+  countryName: string;
+}
+
 export interface EditProfileInput {
   email?: string | null;
   password?: string | null;

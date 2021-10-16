@@ -9,7 +9,7 @@ import { ConfirmEmail } from '../pages/user/confirm-email';
 import { Search } from '../pages/client/search';
 import { Country } from '../pages/client/country';
 import { ShareMusle } from '../pages/client/sharemusle';
-import { MyShareMusles } from '../pages/owner/sharemusles';
+import { MyShareMusles } from '../pages/owner/my-sharemusles';
 import { AddShareMusle } from '../pages/owner/add-sharemusle';
 
 const clientRoutes = [
