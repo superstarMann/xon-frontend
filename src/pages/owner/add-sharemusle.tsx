@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useMutation } from "@apollo/client";
 import gql from "graphql-tag";
 import { createShareMusle, createShareMusleVariables } from "../../api/createShareMusle";
@@ -6,6 +6,7 @@ import { useHistory } from "react-router";
 import { Helmet } from "react-helmet-async";
 import { useForm } from "react-hook-form";
 import { Button } from "../../component/button";
+import { smallCategory } from "../../component/smallCategory";
 
 const CREATE_SHAREMUSLE = gql`
  mutation createShareMusle($input: CreateShareMusleInput!){
@@ -19,14 +20,49 @@ const CREATE_SHAREMUSLE = gql`
 interface IFormProps {
     name: string;
     address: string;
-    countryName: string;
+    countryName: smallCategory;
+    file: FileList;
 }
 
 export const AddShareMusle = () => {
-    const [createShareMusleMutation, {data, loading}] = useMutation<createShareMusle, createShareMusleVariables>(CREATE_SHAREMUSLE)
+    const history = useHistory();
+    const onCompleted = (data: createShareMusle) => {
+        const {createShareMusle:{ok}} = data;
+        if(ok){
+            setUploading(false);
+            history.push('/')
+            alert('Well done!')
+        }
+    }
+    const [createShareMusleMutation, {data, loading}] = useMutation<createShareMusle, createShareMusleVariables>(CREATE_SHAREMUSLE,{
+        onCompleted
+    })
     const {register, handleSubmit, getValues, formState:{errors, isValid}} = useForm<IFormProps>({mode:'onChange'});
-    const onSubmit = () => {
-        console.log(getValues());
+    const [uploading, setUploading] = useState(false)
+    const onSubmit = async() => {
+        try{
+            setUploading(true);
+            const {name, address, countryName, file} = getValues();
+            const actualFile = file[0];
+            const formBody = new FormData();
+            formBody.append('file', actualFile);
+            const {url: coverImg} = await (
+                await fetch('http://localhost:5000/uploads/',{
+                    method:'POST',
+                    body: formBody
+                })
+            ).json();
+            createShareMusleMutation({
+                variables:{
+                    input:{
+                        name,
+                        coverImg,
+                        countryName,
+                        address
+                    }
+                }
+            })
+        }catch(error){}
     }
     
     return(
@@ -48,13 +84,18 @@ export const AddShareMusle = () => {
                         placeholder='Address'
                         {...register('address', {required:`Address is required`})}
                         />
+                        <select {...register('countryName', {required: true})} className='input'>
+                         {Object.keys(smallCategory).map((smallCategory, index) => (
+                             <option key={index}>{smallCategory}</option>
+                         ))}
+                     </select>
                         <input
                         className='input'
-                        type='text'
-                        placeholder='Korea'
-                        {...register('countryName', {required:'CountryName is required'})}
+                        type='file'
+                        {...register('file', {required: true})}
+                        accept="image/*"
                         />
-                        <Button canClick={isValid} loading={loading} actionText={`Create ShareMusle`}/>
+                        <Button canClick={isValid} loading={uploading} actionText='Create ShareMusle'/>
                     </form>
                 </div>
             </div>

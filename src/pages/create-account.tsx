@@ -77,7 +77,7 @@ export const CreateAccount = () => {
                          <FormError errorMessage={errors.email.message}/>
                      )}
                     <input
-                     className='input' 
+                     className='input'  
                      placeholder='password'
                      type='password'
                      {...register('password', {required: 'Password is required', minLength:3})}/>
