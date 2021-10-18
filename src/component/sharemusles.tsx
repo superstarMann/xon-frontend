@@ -14,7 +14,7 @@ export const ShareMusle:React.FC<ISharemusleProps> = ({name, coverImg, countryNa
         <Link to={`/shareMusle/${id}`}>
         <div className='flex flex-col'>
             <div style={{backgroundImage: `url(${coverImg})`}}
-             className='bg-red-500 rounded-lg py-24'></div>
+             className='bg-red-500 rounded-lg py-36 bg-cover bg-center'></div>
              <h3 className='lg:text-white text-xl mt-2'>
                 {name}
             </h3>

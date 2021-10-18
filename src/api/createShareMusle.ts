@@ -13,6 +13,7 @@ export interface createShareMusle_createShareMusle {
   __typename: "CreateShareMusleOutput";
   ok: boolean;
   error: string | null;
+  shareMusleId: number;
 }
 
 export interface createShareMusle {

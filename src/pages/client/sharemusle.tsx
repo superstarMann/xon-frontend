@@ -2,9 +2,9 @@ import React from'react';
 import { useQuery } from '@apollo/client';
 import gql from 'graphql-tag';
 import { SHAREMUSLE_FRAGMENT } from '../../fragments';
-import { shareMusle, shareMusleVariables } from '../../api/shareMusle';
 import { useParams } from 'react-router';
 import { Helmet } from 'react-helmet-async';
+import { shareMusle, shareMusleVariables } from '../../api/shareMusle';
 
 const SHAREMUSLE_QUERY = gql`
  query shareMusle($input: ShareMusleInput!){

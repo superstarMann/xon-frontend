@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useMutation } from "@apollo/client";
+import { useApolloClient, useMutation } from "@apollo/client";
 import gql from "graphql-tag";
 import { createShareMusle, createShareMusleVariables } from "../../api/createShareMusle";
 import { useHistory } from "react-router";
@@ -8,12 +8,14 @@ import { useForm } from "react-hook-form";
 import { Button } from "../../component/button";
 import { smallCategory } from "../../component/smallCategory";
 import { FormError } from "../../component/formerror";
+import { MY_SHAREMUSLES } from "./my-sharemusles";
 
 const CREATE_SHAREMUSLE = gql`
  mutation createShareMusle($input: CreateShareMusleInput!){
     createShareMusle(input: $input){
         ok
         error
+        shareMusleId
     }
  }
 `
@@ -26,16 +28,41 @@ interface IFormProps {
 }
 
 export const AddShareMusle = () => {
+    const client = useApolloClient();
     const history = useHistory();
+    const [image, setImage] = useState("");
     const onCompleted = (data: createShareMusle) => {
-        const {createShareMusle:{ok}} = data;
+        const {createShareMusle:{ok, shareMusleId}} = data;
         if(ok){
+            const {name, address, countryName, file} = getValues();
             setUploading(false);
+            const queryResult = client.readQuery({query:MY_SHAREMUSLES})
+            client.writeQuery({
+                query: MY_SHAREMUSLES,
+                data:{
+                    myShareMusles :{
+                        ...queryResult.myShareMusles,
+                        shareMusles:[{
+                        address,
+                        country:{
+                        name: countryName,
+                        __typename: "Country",
+                        },
+                        coverImg: image,
+                        id: shareMusleId,
+                        isPromoted: false,
+                        name,
+                        __typename: "ShareMusle"},
+                        ...queryResult.myShareMusles.shareMusles
+                    ]
+                    }
+                }
+            })
             history.push('/')
             alert('Well done!')
         }
     }
-    const [createShareMusleMutation, {data, loading}] = useMutation<createShareMusle, createShareMusleVariables>(CREATE_SHAREMUSLE,{
+    const [createShareMusleMutation, {data}] = useMutation<createShareMusle, createShareMusleVariables>(CREATE_SHAREMUSLE,{
         onCompleted
     })
     const {register, handleSubmit, getValues, formState:{errors, isValid}} = useForm<IFormProps>({mode:'onChange'});
@@ -53,6 +80,7 @@ export const AddShareMusle = () => {
                     body: formBody
                 })
             ).json();
+            setImage(coverImg)
             createShareMusleMutation({
                 variables:{
                     input:{

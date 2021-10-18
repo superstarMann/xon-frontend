@@ -11,6 +11,7 @@ import { Country } from '../pages/client/country';
 import { ShareMusle } from '../pages/client/sharemusle';
 import { MyShareMusles } from '../pages/owner/my-sharemusles';
 import { AddShareMusle } from '../pages/owner/add-sharemusle';
+import { MyshareMusle } from '../pages/owner/my-shareMusle';
 
 const clientRoutes = [
     {
@@ -49,6 +50,9 @@ const guaderRoutes = [
     },{
         path:'/add-sharemusle',
         component:<AddShareMusle/>
+    },{
+        path:'/shareMusle/:id',
+        component:<MyshareMusle/>
     }
 ]
 
