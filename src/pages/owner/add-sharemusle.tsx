@@ -7,6 +7,7 @@ import { Helmet } from "react-helmet-async";
 import { useForm } from "react-hook-form";
 import { Button } from "../../component/button";
 import { smallCategory } from "../../component/smallCategory";
+import { FormError } from "../../component/formerror";
 
 const CREATE_SHAREMUSLE = gql`
  mutation createShareMusle($input: CreateShareMusleInput!){
@@ -96,6 +97,9 @@ export const AddShareMusle = () => {
                         accept="image/*"
                         />
                         <Button canClick={isValid} loading={uploading} actionText='Create ShareMusle'/>
+                        {data?.createShareMusle.error && (
+                            <FormError errorMessage={data.createShareMusle.error}/>
+                        )}
                     </form>
                 </div>
             </div>
