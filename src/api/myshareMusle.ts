@@ -3,38 +3,62 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { ShareMusleInput } from "./globalTypes";
+import { MyShareMusleInput } from "./globalTypes";
 
 // ====================================================
-// GraphQL query operation: myshareMusle
+// GraphQL query operation: myShareMusle
 // ====================================================
 
-export interface myshareMusle_shareMusle_shareMusle_country {
+export interface myShareMusle_myShareMusle_shareMusle_country {
   __typename: "Country";
   name: string;
 }
 
-export interface myshareMusle_shareMusle_shareMusle {
+export interface myShareMusle_myShareMusle_shareMusle_menu_options_choices {
+  __typename: "DishChoice";
+  name: string;
+  extra: number | null;
+}
+
+export interface myShareMusle_myShareMusle_shareMusle_menu_options {
+  __typename: "DishOption";
+  name: string;
+  extra: number | null;
+  choices: myShareMusle_myShareMusle_shareMusle_menu_options_choices[] | null;
+}
+
+export interface myShareMusle_myShareMusle_shareMusle_menu {
+  __typename: "Dish";
+  id: number;
+  name: string;
+  price: number;
+  photo: string | null;
+  description: string;
+  options: myShareMusle_myShareMusle_shareMusle_menu_options[] | null;
+}
+
+export interface myShareMusle_myShareMusle_shareMusle {
   __typename: "ShareMusle";
   id: number;
   name: string;
   address: string;
   coverImg: string;
-  country: myshareMusle_shareMusle_shareMusle_country | null;
+  country: myShareMusle_myShareMusle_shareMusle_country | null;
   isPromoted: boolean;
+  menu: myShareMusle_myShareMusle_shareMusle_menu[];
 }
 
-export interface myshareMusle_shareMusle {
-  __typename: "ShareMusleOutput";
+export interface myShareMusle_myShareMusle {
+  __typename: "MyShareMusleOutput";
   ok: boolean;
   error: string | null;
-  shareMusle: myshareMusle_shareMusle_shareMusle | null;
+  shareMusle: myShareMusle_myShareMusle_shareMusle | null;
 }
 
-export interface myshareMusle {
-  shareMusle: myshareMusle_shareMusle;
+export interface myShareMusle {
+  myShareMusle: myShareMusle_myShareMusle;
 }
 
-export interface myshareMusleVariables {
-  input: ShareMusleInput;
+export interface myShareMusleVariables {
+  input: MyShareMusleInput;
 }
