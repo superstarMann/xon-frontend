@@ -25,8 +25,8 @@ export const MyShareMusles = () => {
     return(
         <div className='h-screen lg:bg-gray-600 px-5'>
             <div><Helmet><title>My ShareMusles | XON</title></Helmet></div>
-            <div className='max-w-screen-2xl mx-auto lg:bg-gray-600 py-2 lg:pt-32'>
-                <h2 className='lg:text-white text-4xl font-semibold'>My ShareMusles</h2>
+            <div className='max-w-screen-2xl mx-auto lg:bg-gray-600 py-2 lg:px-5 lg:pt-16'>
+                <h2 className='lg:text-white text-3xl lg:text-4xl font-semibold'>My ShareMusles</h2>
                 {data?.myShareMusles.ok && data.myShareMusles.shareMusles.length === 0 ? (
                     <>
                     <h4 className='lg:text-white mt-5 text-xl'>You have no shareMusles.</h4>
