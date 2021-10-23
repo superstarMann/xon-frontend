@@ -96,7 +96,7 @@ export const AddShareMusle = () => {
     
     return(
         <div>
-            <Helmet><title>CreateShareMusle | XON</title></Helmet>
+            <Helmet><title>Create ShareMusle | XON</title></Helmet>
             <div className='h-screen lg:bg-gray-600 flex flex-col lg:justify-center items-center'>
                 <div className='w-full max-w-screen-sm  flex flex-col items-center lg:mb-32'>
                     <h2 className='text-3xl lg:text-white mb-6 font-semibold'>Create ShareMusle!</h2>
