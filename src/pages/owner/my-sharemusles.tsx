@@ -1,5 +1,5 @@
-import React, { useEffect } from'react';
-import { ApolloClient, useApolloClient, useQuery } from '@apollo/client';
+import React from'react';
+import { useQuery } from '@apollo/client';
 import gql from 'graphql-tag';
 import { Helmet } from 'react-helmet-async';
 import { SHAREMUSLE_FRAGMENT } from '../../fragments';
@@ -37,7 +37,7 @@ export const MyShareMusles = () => {
                 ):(
                     <div className='grid lg:grid-cols-4 gap-x-5 gap-y-10 mt-6 lg:mt-10 grid-cols-1'>
                         {data?.myShareMusles.shareMusles.map((shareMusle) => (
-                            <ShareMusle
+                        <ShareMusle
                             key={shareMusle.id + ""}
                             id={shareMusle.id + ""}
                             coverImg={shareMusle.coverImg}

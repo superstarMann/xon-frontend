@@ -78,7 +78,7 @@ export const ShareMusles = () => {
                     <div className='overflow-x-auto'>
                     <div className='flex justify-evenly max-w-xs lg:max-w-screen-sm mx-auto '>
                         {data?.allCountries.countries?.map((country) => (
-                          <Link key={country.id} to={`/country/${country.slug}`}>
+                          <Link key={country.id + ''} to={`/country/${country.slug}`}>
                             <div className='flex flex-col items-center cursor-pointer group' key={country.id}>
                                 <div
                                 style={{backgroundImage:`url(${country.coverImg})`}}

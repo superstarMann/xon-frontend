@@ -37,6 +37,13 @@ export interface myShareMusle_myShareMusle_shareMusle_menu {
   options: myShareMusle_myShareMusle_shareMusle_menu_options[] | null;
 }
 
+export interface myShareMusle_myShareMusle_shareMusle_orders {
+  __typename: "Order";
+  id: number;
+  total: number | null;
+  createdAt: any;
+}
+
 export interface myShareMusle_myShareMusle_shareMusle {
   __typename: "ShareMusle";
   id: number;
@@ -46,6 +53,7 @@ export interface myShareMusle_myShareMusle_shareMusle {
   country: myShareMusle_myShareMusle_shareMusle_country | null;
   isPromoted: boolean;
   menu: myShareMusle_myShareMusle_shareMusle_menu[];
+  orders: myShareMusle_myShareMusle_shareMusle_orders[];
 }
 
 export interface myShareMusle_myShareMusle {

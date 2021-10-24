@@ -34,7 +34,7 @@ export const AddShareMusle = () => {
     const onCompleted = (data: createShareMusle) => {
         const {createShareMusle:{ok, shareMusleId}} = data;
         if(ok){
-            const {name, address, countryName, file} = getValues();
+            const {name, address, countryName, /*file*/} = getValues();
             setUploading(false);
             const queryResult = client.readQuery({query:MY_SHAREMUSLES})
             client.writeQuery({
@@ -65,7 +65,7 @@ export const AddShareMusle = () => {
     const [createShareMusleMutation, {data}] = useMutation<createShareMusle, createShareMusleVariables>(CREATE_SHAREMUSLE,{
         onCompleted
     })
-    const {register, handleSubmit, getValues, formState:{errors, isValid}} = useForm<IFormProps>({mode:'onChange'});
+    const {register, handleSubmit, getValues, formState:{isValid}} = useForm<IFormProps>({mode:'onChange'});
     const [uploading, setUploading] = useState(false)
     const onSubmit = async() => {
         try{

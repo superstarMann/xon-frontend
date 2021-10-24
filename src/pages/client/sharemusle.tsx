@@ -23,11 +23,9 @@ interface IParams{
     id: string
 }
 
-//수정필요
-
 export const ShareMusle = () => {
     const params = useParams<IParams>();
-    const {data, loading} = useQuery<shareMusle, shareMusleVariables>(SHAREMUSLE_QUERY,{
+    const {data} = useQuery<shareMusle, shareMusleVariables>(SHAREMUSLE_QUERY,{
         variables:{
             input:{
                 shareMusleId: +params.id
@@ -38,45 +36,29 @@ export const ShareMusle = () => {
     return(
         <div>
             <Helmet><title>{`${data?.shareMusle.shareMusle?.name} | XON`}</title></Helmet>
-            <div className='h-screen'>
+            <div className='h-screen lg:bg-gray-600'>
                 <div className='lg:bg-gray-600'>
-                    <div className=' max-w-screen-xl py-2 flex justify-center mx-auto lg:bg-gray-600'>
-                        <div className='grid lg:grid-cols-2 w-full lg:grid-rows-2 lg:bg-gray-600 px-5'>
-                            <div className='bg-red-500 bg-cover bg-center my-5 lg:mt-10 py-32 lg:py-60 rounded-2xl'
+                    <div className=' max-w-screen-2xl py-2 flex justify-center mx-auto lg:bg-gray-600'>
+                        <div className='grid lg:grid-cols-3 w-full lg:bg-gray-600 px-5'>
+                            <div className='bg-red-500 bg-cover bg-center mt-3 lg:mt-10 py-32 lg:py-60 rounded-2xl'
                             style={{backgroundImage:`url(${data?.shareMusle.shareMusle?.coverImg})`}}></div>
-                            <div className='flex flex-col lg:text-white items-center justify-center lg:bg-gray-600 rounded-xl py-5'>
-                                <div className='grid grid-rows-1'>
-                                <div className='w-full text-center lg:mb-5'>
-                                  <h4 className='lg:text-4xl text-center text-2xl font-medium mb-3'>{data?.shareMusle.shareMusle?.name}</h4>
-                                </div>
-                                  <div className='text-left'>
-                                    <h5 className='lg:text-2xl text-xl font-light mb-3'>01051741436</h5>
-                                    <h6 className='lg:text-xl text-base font-light mb-3'>{data?.shareMusle.shareMusle?.address}</h6>
-                                    <h6 className='lg:text-lg text-sm font-light '>{data?.shareMusle.shareMusle?.country?.name}</h6>
-                                </div>
+                            <div className='flex flex-col lg:text-white justify-center lg:bg-gray-600 rounded-xl py-5'>
+                                <div className='lg:pl-20'>
+                                    <h4 className='font-semibold text-2xl lg:text-4xl mb-4'>{data?.shareMusle.shareMusle?.name}</h4>
+                                      <div className='text-left flex flex-col gap-y-2'>
+                                        <h5 className='font-normal text-base lg:text-2xl'>01051741436</h5>
+                                        <h6 className='font-normal text-base lg:text-2xl'>{data?.shareMusle.shareMusle?.address}</h6>
+                                        <h6 className='font-normal text-base lg:text-2xl'>{data?.shareMusle.shareMusle?.country?.name}</h6>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+                <div className='max-w-screen-2xl lg:text-white mx-auto px-5 lg:mt-10 mt-8'>
+                    <h1 className='lg:text-3xl text-xl lg:font-medium mb-5 lg:mb-8'>Service</h1>
+                </div>
             </div>
         </div>
     )
 }
-
-/*
-     <div>
-         <Helmet><title>{`${data?.shareMusle.shareMusle?.name} | XON`}</title></Helmet>
-         <div className='h-screen lg:bg-gray-600'>
-            <div 
-            style={{backgroundImage: `url(${data?.shareMusle.shareMusle?.coverImg})`}}
-            className=" bg-gray-800 bg-center bg-cover py-48" >
-                <div className='bg-white w-3/12 py-8 pl-48'>
-                    <h4 className='text-4xl mb-3'>{data?.shareMusle.shareMusle?.name}</h4>
-                    <h5 className='text-sm font-light mb-2'>{data?.shareMusle.shareMusle?.country?.name}</h5>
-                    <h6 className='text-sm font-light'>전화번호</h6>
-                    <h6 className='text-sm font-light'>{data?.shareMusle.shareMusle?.address}</h6>
-                </div>
-            </div>
-         </div>
-     </div>*/

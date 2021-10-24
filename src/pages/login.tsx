@@ -10,7 +10,6 @@ import { Helmet } from 'react-helmet-async';
 import { authTokenVar, isLoggedInVar } from '../apollo';
 import { LOCALSTORAGE_TOKEN, PATTERN } from '../constant';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser } from '@fortawesome/free-regular-svg-icons';
 import { faGg } from '@fortawesome/free-brands-svg-icons';
 
 const LOGIN_MUTATION = gql`

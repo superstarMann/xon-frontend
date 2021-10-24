@@ -35,6 +35,7 @@
     "tailwind": "^2.4.1",
     "tailwindcss": "^2.2.16",
     "typescript": "^4.4.3",
+    "victory": "^36.0.1",
     "web-vitals": "^1.1.2"
   },
   "scripts": {

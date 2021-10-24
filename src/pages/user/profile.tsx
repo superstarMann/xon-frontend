@@ -3,7 +3,6 @@ import { useApolloClient, useMutation } from '@apollo/client';
 import gql from 'graphql-tag';
 import { useForm } from 'react-hook-form';
 import { editProfile, editProfileVariables } from '../../api/editProfile';
-import { UserRole } from '../../api/globalTypes';
 import { isLoggedInVar } from '../../apollo';
 import { Button } from '../../component/button';
 import { FormError } from '../../component/formerror';
