@@ -71,7 +71,7 @@ export const MyshareMusle = () => {
                         <h4 className='lg:text-3xl text-xl lg:font-medium'>Please Upload Your Service!</h4>
                     ): (<div className='max-w-screen-2xl px-5 mx-auto'>
                         <h1 className='lg:text-3xl text-xl lg:font-medium mb-5 lg:mb-8'>My Services</h1>
-                          <div className='grid lg:grid-cols-3 max-w-screen-2xl mx-auto gap-5'>
+                          <div className='grid lg:grid-cols-3 max-w-screen-2xl mx-auto gap-y-3 gap-x-5'>
                           {data?.myShareMusle.shareMusle?.menu.map((dish) => (
                             <Dish
                             key={dish.id + ""}

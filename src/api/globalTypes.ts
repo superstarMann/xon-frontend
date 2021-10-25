@@ -235,6 +235,16 @@ export interface CreateDishInput {
   shareMusleId: number;
 }
 
+export interface CreateOrderInput {
+  shareMusleId: number;
+  items: CreateOrderItemInput[];
+}
+
+export interface CreateOrderItemInput {
+  dishId: number;
+  options?: OrderItemOptionInput[] | null;
+}
+
 export interface CreateShareMusleInput {
   name: string;
   address: string;
@@ -267,6 +277,11 @@ export interface LoginInput {
 
 export interface MyShareMusleInput {
   id: number;
+}
+
+export interface OrderItemOptionInput {
+  name: string;
+  choice?: string | null;
 }
 
 export interface SearchShareMusleInput {
