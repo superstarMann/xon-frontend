@@ -1,5 +1,5 @@
 import React, { useState } from'react';
-import { useMutation, useQuery } from '@apollo/client';
+import { useQuery } from '@apollo/client';
 import gql from 'graphql-tag';
 import { DISH_FRAGMENT, SHAREMUSLE_FRAGMENT } from '../../fragments';
 import { useParams } from 'react-router';
@@ -9,6 +9,7 @@ import { Dish } from '../../component/dish';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faShoppingCart } from '@fortawesome/free-solid-svg-icons';
 import { CreateOrderItemInput } from '../../api/globalTypes';
+
 
 const SHAREMUSLE_QUERY = gql`
  query shareMusle($input: ShareMusleInput!){
@@ -49,16 +50,26 @@ export const ShareMusle = () => {
             }
         }
     })
-    const [orderStart, setOrderStart] = useState(false);
-    const [orderItems, setOrderItems] = useState<CreateOrderItemInput[]>([]);
-    const onTrigger = () => {
-        setOrderStart(true);
+
+    const [orderStarted, setOrderStarted] = useState(false);
+    const [addItems, setAddItems] = useState<CreateOrderItemInput[]>([])
+    const triggerStartOrder = () => {
+        setOrderStarted(true)
+    }
+    const isSelected = (dishId: number) => {
+        return Boolean(addItems.find((order) => order.dishId === dishId))
     }
     const addItemsToOrder = (dishId: number) => {
-        setOrderItems((current) => [{dishId},...current])
+        if(isSelected(dishId)){
+            return
+        }
+        setAddItems((current) => [{ dishId }, ...current]);
     }
-    console.log(orderItems);
-    
+    const removeOrder = (dishId: number) => {
+        setAddItems((current) => current.filter((order) => order.dishId !== dishId));
+    }
+    console.log(addItems)
+        
     return(
         <div>
             <Helmet><title>{`${data?.shareMusle.shareMusle?.name} | XON`}</title></Helmet>
@@ -66,7 +77,7 @@ export const ShareMusle = () => {
                 <div className='lg:bg-gray-600'>
                     <div className=' max-w-screen-2xl py-2 flex justify-center mx-auto lg:bg-gray-600'>
                         <div className='grid lg:grid-cols-3 w-full lg:bg-gray-600 px-5'>
-                            <div className='bg-red-500 bg-cover bg-center mt-3 lg:mt-10 py-32 lg:py-60 rounded-2xl'
+                            <div className='bg-red-500 bg-cover bg-center mt-3 lg:mt-10 py-40 lg:py-60 rounded-2xl'
                             style={{backgroundImage:`url(${data?.shareMusle.shareMusle?.coverImg})`}}></div>
                             <div className='flex flex-col lg:text-white justify-center lg:bg-gray-600 rounded-xl py-5'>
                                 <div className='lg:pl-20'>
@@ -86,22 +97,26 @@ export const ShareMusle = () => {
                         <h1 className='lg:text-3xl text-xl lg:font-medium mb-5 lg:mb-8'>Service</h1>
                         <div className='flex justify-end lg:pb-10 pb-5 text-white'>
                             <button 
-                            onClick={onTrigger}
+                            onClick={triggerStartOrder}
                             className='bg-lime-500 w-full lg:w-min text-xl rounded-lg px-5 py-2 font-normal focus:outline-none'>
-                                <FontAwesomeIcon icon={faShoppingCart}/>
+                                {orderStarted ? (
+                                    <div>Ordering...</div>
+                                ) : (<FontAwesomeIcon icon={faShoppingCart}/>)}
                             </button>
                         </div>
                         <div className='grid lg:grid-cols-3 gap-x-5 gap-y-3'>
                             {data?.shareMusle.shareMusle?.menu.map((dish) => (
                                 <Dish
                                 id={dish.id}
-                                addItemsToOrder={addItemsToOrder}
-                                orderStart={orderStart}
                                 key={dish.id + ""}
                                 name={dish.name}
                                 price={dish.price + ""}
                                 description={dish.description}
                                 options={dish.options}
+                                orderStarted={orderStarted}
+                                addItemsToOrder={addItemsToOrder}
+                                isSelected={isSelected(dish.id)}
+                                removeOrder={removeOrder}
                                 />
                             ))}
                         </div>

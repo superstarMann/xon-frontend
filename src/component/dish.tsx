@@ -6,15 +6,38 @@ interface IProps{
   price: string;
   description: string;
   options?: shareMusle_shareMusle_shareMusle_menu_options[] | null; 
-  orderStart?:boolean;
-  id?: number;
-  addItemsToOrder? : (dishid: number) => void;
+  orderStarted?: boolean;
+  id?:number
+  isSelected?: boolean
+  addItemsToOrder?: (dishId: number) => void;
+  removeOrder?: (dishId: number) => void
 }
 
-export const Dish: React.FC<IProps> = ({ description, name, price, options, id=0, orderStart=false, addItemsToOrder}) => {
+export const Dish: React.FC<IProps> = ({ 
+  id =1,
+  description, 
+  name, 
+  price, 
+  options, 
+  orderStarted = false,
+  isSelected,
+  addItemsToOrder,
+  removeOrder
+  }) => {
+    const onClick = () => {
+      if(orderStarted){
+        if(!isSelected && addItemsToOrder){
+          return addItemsToOrder(id)
+        }
+        if(isSelected && removeOrder){
+          return removeOrder(id)
+        }
+      }
+    }
+
     return (
       <div 
-      onClick={() => (orderStart && addItemsToOrder ? addItemsToOrder(id) : null)}
+      onClick={onClick}
       className="px-4 py-4 border cursor-pointer hover:border-gray-800 transition-all ">
         <div className="mb-2">
           <h3 className="text-lg font-semibold pb-2">
