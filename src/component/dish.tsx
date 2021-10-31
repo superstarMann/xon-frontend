@@ -1,15 +1,16 @@
+import { faCheckCircle, faCircle } from '@fortawesome/free-regular-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 import { shareMusle_shareMusle_shareMusle_menu_options } from '../api/shareMusle';
 
 interface IProps{
+  id?: number;
   name: string;
   price: string;
   description: string;
   options?: shareMusle_shareMusle_shareMusle_menu_options[] | null; 
-  orderStarted?: boolean;
-  id?:number
-  isSelected?: boolean
-  addItemsToOrder?: (dishId: number) => void;
+  isSelected?: boolean;
+  addItemToOrder?: (dishId: number) => void
   removeOrder?: (dishId: number) => void
 }
 
@@ -19,42 +20,42 @@ export const Dish: React.FC<IProps> = ({
   name, 
   price, 
   options, 
-  orderStarted = false,
-  isSelected,
-  addItemsToOrder,
-  removeOrder
+  isSelected = false,
+  addItemToOrder,
+  removeOrder,
+  children
   }) => {
+
     const onClick = () => {
-      if(orderStarted){
-        if(!isSelected && addItemsToOrder){
-          return addItemsToOrder(id)
-        }
-        if(isSelected && removeOrder){
-          return removeOrder(id)
-        }
+      if(!isSelected && addItemToOrder){
+        addItemToOrder(id)
+      }
+      if(isSelected && removeOrder){
+        removeOrder(id)
       }
     }
 
     return (
       <div 
-      onClick={onClick}
-      className="px-4 py-4 border cursor-pointer hover:border-gray-800 transition-all ">
+      className="px-4 py-4 border">
         <div className="mb-2">
-          <h3 className="text-lg font-semibold pb-2">
+          <div className="text-lg font-semibold pb-2 flex justify-between">
+            <div>
             {name} 
             <span className='ml-2 font-medium'>${price}</span>
-          </h3>
+            </div>
+            <span className='pr-2 text-xl'>
+              <button onClick={onClick}>
+                {isSelected ? <FontAwesomeIcon icon={faCheckCircle}/> : <FontAwesomeIcon icon={faCircle}/>}
+                </button>
+            </span>
+          </div>
           <h4 className="font-medium opacity-80">{description}</h4>
         </div>
         {options && options.length !== 0 && (
           <div>
             <h5 className='py-2 font-semibold'>Service Options:</h5>
-            {options.map((option) => (
-              <div className='flex items-center'>
-                <h5 className='mr-2'>{option.name}</h5>
-                <h6 className='text-sm opacity-75'>(${option.extra})</h6>
-              </div>
-            ))}
+            {children}
           </div>
         )}
       </div>

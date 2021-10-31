@@ -6,8 +6,6 @@ import { useParams } from 'react-router';
 import { Helmet } from 'react-helmet-async';
 import { shareMusle, shareMusleVariables } from '../../api/shareMusle';
 import { Dish } from '../../component/dish';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faShoppingCart } from '@fortawesome/free-solid-svg-icons';
 import { CreateOrderItemInput } from '../../api/globalTypes';
 
 
@@ -51,25 +49,34 @@ export const ShareMusle = () => {
         }
     })
 
-    const [orderStarted, setOrderStarted] = useState(false);
-    const [addItems, setAddItems] = useState<CreateOrderItemInput[]>([])
-    const triggerStartOrder = () => {
-        setOrderStarted(true)
+    const [orderItems, setOrderItems] = useState<CreateOrderItemInput[]>([])
+    const getItem = (dishId: number) => {
+        return orderItems.find((order) => order.dishId === dishId);
     }
-    const isSelected = (dishId: number) => {
-        return Boolean(addItems.find((order) => order.dishId === dishId))
+    const isSelected = (dishId:number) => {
+        return Boolean(getItem(dishId));
     }
-    const addItemsToOrder = (dishId: number) => {
+    const addItemToOrder = (dishId: number) => {
         if(isSelected(dishId)){
-            return
+            return;
         }
-        setAddItems((current) => [{ dishId }, ...current]);
+        setOrderItems((current) => [{dishId, options: []}, ...current])
     }
     const removeOrder = (dishId: number) => {
-        setAddItems((current) => current.filter((order) => order.dishId !== dishId));
+        setOrderItems((current) => current.filter((order) => order.dishId !== dishId))
     }
-    console.log(addItems)
-        
+    const addOptionToItem = (dishId: number, option: any) => {
+        if(!isSelected(dishId)){
+            return
+        }
+        const oldItem = getItem(dishId);
+        if(oldItem){
+            removeOrder(dishId)
+            setOrderItems((current) => [{dishId, options: [option, ...oldItem.options!]}, ...current])
+        }
+    }
+
+    console.log(orderItems)
     return(
         <div>
             <Helmet><title>{`${data?.shareMusle.shareMusle?.name} | XON`}</title></Helmet>
@@ -94,30 +101,32 @@ export const ShareMusle = () => {
                 </div>
                 <div className='lg:bg-gray-600'>
                     <div className='max-w-screen-2xl lg:text-white mx-auto px-5 lg:mt-10 mt-8 pb-20'>
-                        <h1 className='lg:text-3xl text-xl lg:font-medium mb-5 lg:mb-8'>Service</h1>
+                        <h1 className='lg:text-3xl text-xl lg:font-medium'>Service</h1>
                         <div className='flex justify-end lg:pb-10 pb-5 text-white'>
-                            <button 
-                            onClick={triggerStartOrder}
-                            className='bg-lime-500 w-full lg:w-min text-xl rounded-lg px-5 py-2 font-normal focus:outline-none'>
-                                {orderStarted ? (
-                                    <div>Ordering...</div>
-                                ) : (<FontAwesomeIcon icon={faShoppingCart}/>)}
-                            </button>
                         </div>
                         <div className='grid lg:grid-cols-3 gap-x-5 gap-y-3'>
                             {data?.shareMusle.shareMusle?.menu.map((dish) => (
-                                <Dish
+                            <Dish
                                 id={dish.id}
                                 key={dish.id + ""}
                                 name={dish.name}
                                 price={dish.price + ""}
                                 description={dish.description}
                                 options={dish.options}
-                                orderStarted={orderStarted}
-                                addItemsToOrder={addItemsToOrder}
                                 isSelected={isSelected(dish.id)}
+                                addItemToOrder={addItemToOrder}
                                 removeOrder={removeOrder}
-                                />
+                                >
+                                {dish.options?.map((option,index) => (
+                                    <div key={index} className='flex items-center'
+                                        onClick={
+                                           () => addOptionToItem ? addOptionToItem(dish.id, {name: option.name}): null
+                                        }>
+                                        <h5 className='mr-2'>{option.name}</h5>
+                                        <h6 className='text-sm opacity-75'>(${option.extra})</h6>
+                                    </div>
+                                ))}
+                            </Dish>
                             ))}
                         </div>
                     </div>
