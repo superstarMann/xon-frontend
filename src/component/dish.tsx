@@ -8,14 +8,14 @@ interface IProps{
   name: string;
   price: string;
   description: string;
-  options?: shareMusle_shareMusle_shareMusle_menu_options[] | null; 
   isSelected?: boolean;
   addItemToOrder?: (dishId: number) => void
   removeOrder?: (dishId: number) => void
+  options?: shareMusle_shareMusle_shareMusle_menu_options[] | null; 
 }
 
 export const Dish: React.FC<IProps> = ({ 
-  id =1,
+  id = 1,
   description, 
   name, 
   price, 
@@ -23,7 +23,7 @@ export const Dish: React.FC<IProps> = ({
   isSelected = false,
   addItemToOrder,
   removeOrder,
-  children
+  children: dishOption,
   }) => {
 
     const onClick = () => {
@@ -37,17 +37,17 @@ export const Dish: React.FC<IProps> = ({
 
     return (
       <div 
-      className="px-4 py-4 border">
+      className="px-4 py-4 border bg-gray-700">
         <div className="mb-2">
           <div className="text-lg font-semibold pb-2 flex justify-between">
             <div>
             {name} 
             <span className='ml-2 font-medium'>${price}</span>
             </div>
-            <span className='pr-2 text-xl'>
+            <span className='pr-2 text-2xl'>
               <button onClick={onClick}>
-                {isSelected ? <FontAwesomeIcon icon={faCheckCircle}/> : <FontAwesomeIcon icon={faCircle}/>}
-                </button>
+                {isSelected ? <FontAwesomeIcon className='text-lime-500' icon={faCheckCircle}/> : <FontAwesomeIcon  icon={faCircle}/>}
+              </button>
             </span>
           </div>
           <h4 className="font-medium opacity-80">{description}</h4>
@@ -55,7 +55,7 @@ export const Dish: React.FC<IProps> = ({
         {options && options.length !== 0 && (
           <div>
             <h5 className='py-2 font-semibold'>Service Options:</h5>
-            {children}
+            {dishOption}
           </div>
         )}
       </div>

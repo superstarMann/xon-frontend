@@ -54,11 +54,11 @@ export const Search = () => {
     const onNextPageClick = () => setPage(current => current + 1);
     const onPrevPageClick = () => setPage(current => current - 1);
    return(
-        <div className='h-screen lg:bg-gray-600'>
+        <div className='h-screen lg:bg-gray-700'>
             <Helmet><title>search | XON</title></Helmet>
             <form 
                onSubmit={handleSubmit(onSearch)}
-               className='flex w-full justify-center items-center py-16 lg:py-28 bg-gray-100 lg:bg-gray-600'
+               className='flex w-full justify-center items-center py-16 lg:py-28 bg-gray-100 lg:bg-gray-800'
                       >
                     <input
                     {...register('searchTerm', {minLength:1})}
@@ -68,8 +68,8 @@ export const Search = () => {
                     />
             </form>
            {Boolean(data?.searchShareMusle.totalResults) ? (
-           <div className='lg:bg-gray-600'>
-            <div className='max-w-screen-2xl mx-auto px-5 pb-20 lg:bg-gray-600 mt-10'>
+           <div className='lg:bg-gray-700'>
+            <div className='max-w-screen-2xl mx-auto px-5 pb-20 lg:bg-gray-700 mt-20'>
                 <div className='grid lg:grid-cols-4 grid-cols-1 gap-x-5 gap-y-10 '>
                     {data?.searchShareMusle.shareMusles?.map((shareMusle) => (
                         <ShareMusle 
@@ -82,7 +82,7 @@ export const Search = () => {
                         />
                     ))}
                 </div>
-                <div className='grid max-w-sm grid-cols-3 mx-auto text-center lg:text-white mt-10 lg:bg-gray-600'>
+                <div className='grid max-w-sm grid-cols-3 mx-auto text-center lg:text-white mt-20 lg:bg-gray-700'>
                     {page > 1 ? (
                         <button onClick={onPrevPageClick}>&larr;</button>
                     ) : (<div></div>)}

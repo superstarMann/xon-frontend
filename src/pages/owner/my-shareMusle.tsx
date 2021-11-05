@@ -8,6 +8,7 @@ import { myShareMusle, myShareMusleVariables } from '../../api/myShareMusle';
 import { Helmet } from 'react-helmet-async';
 import { Dish } from '../../component/dish';
 import { VictoryChart, VictoryAxis, VictoryVoronoiContainer, VictoryLine, VictoryLabel, VictoryTooltip } from 'victory'
+import { DishOption } from '../../component/dishOption';
 
 export const MY_SHAREMUSLE_QUERY = gql`
  query myShareMusle($input: MyShareMusleInput!){
@@ -69,16 +70,28 @@ export const MyshareMusle = () => {
                 <div className='lg:mt-10 mt-8 lg:text-white'>
                     {data?.myShareMusle.shareMusle?.menu.length === 0 ? (
                         <h4 className='lg:text-3xl text-xl lg:font-medium'>Please Upload Your Service!</h4>
-                    ): (<div className='max-w-screen-2xl px-5 mx-auto'>
+                    ): (
+                    <div className='max-w-screen-2xl px-5 mx-auto'>
                         <h1 className='lg:text-3xl text-xl lg:font-medium mb-5 lg:mb-8'>My Services</h1>
-                          <div className='grid lg:grid-cols-3 max-w-screen-2xl mx-auto gap-y-3 gap-x-5'>
+                          <div className='grid lg:grid-cols-3 gap-x-5 gap-y-3'>
                           {data?.myShareMusle.shareMusle?.menu.map((dish) => (
                             <Dish
                             key={dish.id + ""}
                             name={dish.name}
                             description={dish.description}
                             price={dish.price + ""}
-                            />
+                            options={dish.options}
+                            >
+                            {dish.options?.map((option, index) => (
+                                    <DishOption
+                                    key={index}
+                                    name={option.name}
+                                    dishId={dish.id}
+                                    addOptionToItem={() => false}
+                                    removeOptionFormItem={() => false}
+                                    />
+                                ))}
+                            </Dish>
                           ))}
                           </div>
                     </div>)}

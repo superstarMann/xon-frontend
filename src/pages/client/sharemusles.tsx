@@ -63,7 +63,7 @@ export const ShareMusles = () => {
     return(
         <div className='lg:bg-gray-600 h-screen'>
             <Helmet><title>Home | XON</title></Helmet>
-                <form className='flex w-full justify-center items-center py-16 lg:py-28 bg-gray-100 lg:bg-gray-600'
+                <form className='flex w-full justify-center items-center py-16 lg:py-28 bg-gray-100 lg:bg-gray-800'
                       onSubmit={handleSubmit(onSearch)}>
                     <input
                     {...register('searchTerm', {minLength:1})}
@@ -73,8 +73,8 @@ export const ShareMusles = () => {
                     />
                 </form>
                 {!loading && (
-                <div className='lg:bg-gray-600'>
-                  <div className='max-w-screen-2xl mx-auto px-5 pt-5 lg:pt-0 lg:bg-gray-600 pb-20'>
+                <div className='lg:bg-gray-700'>
+                  <div className='max-w-screen-2xl mx-auto px-5 pt-5 lg:pt-10 lg:bg-gray-00 pb-20'>
                     <div className='overflow-x-auto'>
                     <div className='flex justify-evenly max-w-xs lg:max-w-screen-sm mx-auto '>
                         {data?.allCountries.countries?.map((country) => (

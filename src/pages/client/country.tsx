@@ -47,15 +47,17 @@ export const Country = () => {
     return(
         <div>
             <Helmet><title>{`${data?.country.country?.name} | XON`}</title></Helmet>
-            <div className='h-screen lg:bg-gray-600'>
-              <div className='flex justify-center text-center border-b-2 shadow-md lg:border-gray-600 items-center py-20 lg:py-28'>
-                <span className='lg:text-5xl text-3xl font-semibold lg:text-white'>{data?.country.country?.name}</span>
-              </div>
-              <div className='lg:bg-gray-600'>
-                  <div className='max-w-screen-2xl mx-auto mt-10 px-5'>
+            <div className='h-screen lg:bg-gray-700'>
+                <div className='lg:bg-gray-800'>
+                    <div className='flex justify-center text-center border-b-2 shadow-md lg:border-gray-800 items-center py-20 lg:py-28'>
+                      <span className='lg:text-5xl text-3xl font-semibold lg:text-white'>{data?.country.country?.name}</span>
+                    </div>
+                </div>
+              <div className='lg:bg-gray-700'>
+                  <div className='max-w-screen-2xl mx-auto pt-10 px-5'>
                       <div className='grid lg:grid-cols-4 grid-cols-1 gap-x-5 gap-y-10'>
                       {data?.country.shareMusles?.map((shareMusle) => (
-                      <div>
+                      <div className='pt-14'>
                           <ShareMusle
                           address={shareMusle.address}
                           key={shareMusle.id + ''}
@@ -67,7 +69,7 @@ export const Country = () => {
                       </div>
                   ))}
                       </div>
-                      <div className='grid grid-cols-3 max-w-sm mx-auto text-center lg:text-white py-10'>
+                      <div className='grid grid-cols-3 max-w-sm mx-auto text-center lg:text-white pt-16'>
                           {page > 1 ? (
                               <button onClick={onPrevPageClick}>&larr;</button>
                           ) : (<div></div>)}
@@ -79,8 +81,8 @@ export const Country = () => {
                           )}
                       </div>
                   </div>
-              </div>
-            </div>            
+                  </div>
+              </div>        
         </div>
     )
 }

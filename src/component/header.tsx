@@ -21,13 +21,13 @@ export const Header = () =>{
                     </span>
             </div>
         )}
-        <div className='lg:bg-gray-700'>
+        <div className='lg:bg-pink-300'>
             <div className='w-full flex justify-between items-center lg:text-white max-w-screen-3xl mx-auto py-4 px-5 lg:px-10'>
                 <Link to='/'>
                    <FontAwesomeIcon icon={faGg} className='text-2xl'/>
                 </Link>
                 <Link to='/edit-profile'>
-                   <FontAwesomeIcon icon={faUser} className='text-2xl'/>
+                   <FontAwesomeIcon icon={faUser} className='text-2xl '/>
                 </Link>
             </div>
         </div>

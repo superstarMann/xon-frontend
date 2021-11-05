@@ -80,7 +80,7 @@ export const Profile = () => {
 
     return(
         <div className='h-screen lg:bg-gray-700 flex flex-col lg:justify-center items-center'>
-           <div className='w-full max-w-screen-sm flex flex-col items-center lg:mb-32'>
+           <div className='w-full max-w-screen-sm flex flex-col items-center lg:mb-3D2'>
                <Helmet><title>edit-profile | XON</title></Helmet>
              <h2 className='lg:text-white text-3xl font-semibold mb-6'>Edit Your Profile</h2>
              <form className='w-full grid gap-3 px-5' onSubmit={handleSubmit(onSubmit)}>
