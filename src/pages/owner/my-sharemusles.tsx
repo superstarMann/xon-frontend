@@ -4,7 +4,7 @@ import gql from 'graphql-tag';
 import { Helmet } from 'react-helmet-async';
 import { SHAREMUSLE_FRAGMENT } from '../../fragments';
 import { Link } from 'react-router-dom';
-import { ShareMusle } from '../../component/sharemusles';
+import { ShareMusle } from '../../component/sharemusle';
 import { myShareMusles } from '../../api/myShareMusles';
 
 export const MY_SHAREMUSLES = gql`

@@ -5,7 +5,7 @@ import { useParams } from 'react-router';
 import { countryQuery, countryQueryVariables } from '../../api/countryQuery';
 import { COUNTRY_FRAGMENT, SHAREMUSLE_FRAGMENT } from '../../fragments';
 import { Helmet } from 'react-helmet';
-import { ShareMusle } from '../../component/sharemusles';
+import { ShareMusle } from '../../component/sharemusle';
 
 const COUNTRY_QUERY = gql`
  query countryQuery($input: CountryInput!){

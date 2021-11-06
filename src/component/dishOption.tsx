@@ -20,8 +20,8 @@ export const DishOption:React.FC<DishOptionProps> = ({dishId, name, extra, addOp
 
     return(
         <button 
-        className={`flex border px-2 py-1 
-        ${isSelected ? "border-gray-600": ""}`}
+        className={`flex border-2 px-2 py-1 mb-2 rounded-lg
+        ${isSelected ? "border-lime-600": "hover:border-lime-800"}`}
         onClick={onClick}
         >
             <h6>{name}</h6>

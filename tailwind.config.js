@@ -11,7 +11,7 @@ module.exports = {
       colors:{
         fuchsia: colors.fuchsia,
         lime: colors.lime
-      }
+      },
     },
   },
   variants: {

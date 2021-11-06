@@ -1,14 +1,14 @@
 import React, { useState } from'react';
-import { useQuery } from '@apollo/client';
+import { useMutation, useQuery } from '@apollo/client';
 import gql from 'graphql-tag';
 import { DISH_FRAGMENT, SHAREMUSLE_FRAGMENT } from '../../fragments';
-import { useParams } from 'react-router';
+import { useHistory, useParams } from 'react-router';
 import { Helmet } from 'react-helmet-async';
 import { shareMusle, shareMusleVariables } from '../../api/shareMusle';
 import { Dish } from '../../component/dish';
 import { CreateOrderItemInput } from '../../api/globalTypes';
 import { DishOption } from '../../component/dishOption';
-
+import { createOrder, createOrderVariables} from '../../api/createOrder'
 
 const SHAREMUSLE_QUERY = gql`
  query shareMusle($input: ShareMusleInput!){
@@ -32,6 +32,7 @@ mutation createOrder($input: CreateOrderInput!){
     createOrder(input:$input){
         ok
         error
+        orderId
     }
  }
 `
@@ -49,7 +50,11 @@ export const ShareMusle = () => {
             }
         }
     })
+    const [orderStarted, setOrderStarted] = useState(false)
     const [orderItems, setOrderItems] = useState<CreateOrderItemInput[]>([])
+    const onTriggerOrder = () => {
+        setOrderStarted(true)
+    }
     const getItem = (dishId: number) => {
         return orderItems.find((order) => order.dishId === dishId);
     }
@@ -91,7 +96,6 @@ export const ShareMusle = () => {
             return
         }
     }
-
     const getOptionFromItem = (item: CreateOrderItemInput, optionName: string) => {
         return item.options?.find((option) => option.name == optionName);
     }
@@ -102,7 +106,39 @@ export const ShareMusle = () => {
         }
         return false
     }
-    console.log(orderItems)
+    const onCancelOrder = () => {
+        setOrderStarted(false)
+        setOrderItems([]);
+    }
+    const history = useHistory();
+    const onCompleted = (data: createOrder) => {
+        const {createOrder :{ok, orderId}} = data;
+        if(ok){
+            alert('Well done!')
+            history.push(`/orders/${orderId}`)
+        }
+    }
+    const [createOrderMutation] = useMutation<createOrder, createOrderVariables>(CREATE_ORDER_MUTATION,
+        {onCompleted})
+
+    const onConfirmBtn = () => {
+        if(orderItems.length === 0 ) {
+            alert(`Can't place empty order`)
+            return
+        }
+        const ok = window.confirm('You are about to place an order');
+        if(ok){
+            createOrderMutation({
+                variables:{
+                    input:{
+                        shareMusleId: +params.id,
+                        items: orderItems
+                    }
+                }
+            })            
+        }
+    }
+    
     return(
         <div>
             <Helmet><title>{`${data?.shareMusle.shareMusle?.name} | XON`}</title></Helmet>
@@ -110,7 +146,7 @@ export const ShareMusle = () => {
                 <div className='lg:bg-gray-700'>
                     <div className=' max-w-screen-2xl py-2 flex justify-center mx-auto lg:bg-gray-700'>
                         <div className='grid lg:grid-cols-3 w-full lg:bg-gray-700 px-5'>
-                            <div className='bg-red-500 bg-cover bg-center mt-3 lg:mt-10 py-40 lg:py-60 rounded-2xl'
+                            <div className='bg-red-500 bg-cover bg-center lg:mt-10 py-40 lg:py-60 rounded-2xl'
                             style={{backgroundImage:`url(${data?.shareMusle.shareMusle?.coverImg})`}}></div>
                             <div className='flex flex-col lg:text-white justify-center lg:bg-gray-700 rounded-xl py-5'>
                                 <div className='lg:pl-20'>
@@ -122,13 +158,36 @@ export const ShareMusle = () => {
                                     </div>
                                 </div>
                             </div>
+                            <div className='text-white'>
+                                <div className='bg'>Description</div>
+                                <div>License</div>
+                            </div>
                         </div>
                     </div>
                 </div>
                 <div className='lg:bg-gray-700'>
                     <div className='max-w-screen-2xl lg:text-white mx-auto px-5 lg:mt-10 pb-20'>
                         <h1 className='lg:text-3xl text-xl lg:font-medium'>Service</h1>
-                        <div className='flex justify-end lg:pb-10 pb-5 text-white'>
+                        <div className='flex flex-col items-end pb-5 text-lg mb-2'>
+                        {!orderStarted && (
+                            <button onClick={onTriggerOrder} className='bg-lime-500 rounded-lg px-5 py-2'>
+                                Start Order
+                            </button>
+                        )}
+                        {orderStarted && (
+                            <div>
+                                <button 
+                                onClick={onConfirmBtn} 
+                                className='bg-lime-500 rounded-lg px-5 py-2 mr-4'>
+                                Confirm Order
+                                </button>
+                                <button 
+                                onClick={onCancelOrder}
+                                className='bg-red-500 rounded-lg px-5 py-2'>
+                                    Cancel Order
+                                </button>
+                            </div>
+                        )}
                         </div>
                         <div className='grid lg:grid-cols-3 gap-x-5 gap-y-3'>
                             {data?.shareMusle.shareMusle?.menu.map((dish) => (
@@ -142,6 +201,7 @@ export const ShareMusle = () => {
                                 isSelected={isSelected(dish.id)}
                                 addItemToOrder={addItemToOrder}
                                 removeOrder={removeOrder}
+                                orderStarted={orderStarted}
                                 >
                                 {dish.options?.map((option, index) => (
                                     <DishOption

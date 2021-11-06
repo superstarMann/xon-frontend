@@ -5,7 +5,7 @@ import { Helmet } from 'react-helmet-async';
 import { useForm } from 'react-hook-form';
 import { useHistory, useLocation } from 'react-router';
 import { searchShareMusles, searchShareMuslesVariables } from '../../api/searchShareMusles';
-import { ShareMusle } from '../../component/sharemusles';
+import { ShareMusle } from '../../component/sharemusle';
 import { SHAREMUSLE_FRAGMENT } from '../../fragments';
 import { IProps } from './sharemusles';
 

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useQuery } from '@apollo/client';
 import gql from 'graphql-tag';
 import { shareMuslesPageQuery, shareMuslesPageQueryVariables } from '../../api/shareMuslesPageQuery';
-import { ShareMusle } from '../../component/sharemusles';
+import { ShareMusle } from '../../component/sharemusle';
 import { useHistory } from 'react-router';
 import { useForm } from 'react-hook-form';
 import { SHAREMUSLE_FRAGMENT } from '../../fragments';
@@ -92,7 +92,7 @@ export const ShareMusles = () => {
                         ))}
                     </div>
                     </div>
-                    <div className='grid lg:grid-cols-4 gap-x-5 gap-y-10 mt-10 grid-cols-1 '>
+                    <div className='grid lg:grid-cols-4 gap-x-5 gap-y-10 mt-10 grid-cols-1'>
                         {data?.allShareMusle.results?.map((shareMusle) => (
                         <ShareMusle 
                         address={shareMusle.address}

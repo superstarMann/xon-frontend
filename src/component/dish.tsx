@@ -9,6 +9,7 @@ interface IProps{
   price: string;
   description: string;
   isSelected?: boolean;
+  orderStarted?: boolean;
   addItemToOrder?: (dishId: number) => void
   removeOrder?: (dishId: number) => void
   options?: shareMusle_shareMusle_shareMusle_menu_options[] | null; 
@@ -21,23 +22,26 @@ export const Dish: React.FC<IProps> = ({
   price, 
   options, 
   isSelected = false,
+  orderStarted = false,
   addItemToOrder,
   removeOrder,
   children: dishOption,
   }) => {
 
     const onClick = () => {
-      if(!isSelected && addItemToOrder){
-        addItemToOrder(id)
-      }
-      if(isSelected && removeOrder){
-        removeOrder(id)
+      if(orderStarted){
+        if(!isSelected && addItemToOrder){
+          addItemToOrder(id)
+        }
+        if(isSelected && removeOrder){
+          removeOrder(id)
+        }
       }
     }
 
     return (
       <div 
-      className="px-4 py-4 border bg-gray-700">
+      className="px-4 py-4 border-2 lg:bg-gray-700">
         <div className="mb-2">
           <div className="text-lg font-semibold pb-2 flex justify-between">
             <div>
