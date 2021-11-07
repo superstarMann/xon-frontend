@@ -25,7 +25,7 @@ export const DishOption:React.FC<DishOptionProps> = ({dishId, name, extra, addOp
         onClick={onClick}
         >
             <h6>{name}</h6>
-            <h6>{extra}</h6>
+            <span className='ml-2'>{`$${extra}`}</span>
         </button>
     )
 }

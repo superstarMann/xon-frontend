@@ -13,6 +13,8 @@ import { MyShareMusles } from '../pages/owner/my-sharemusles';
 import { AddShareMusle } from '../pages/owner/add-sharemusle';
 import { MyshareMusle } from '../pages/owner/my-shareMusle';
 import { AddService } from '../pages/owner/add-service';
+import { Order } from '../pages/user/order';
+
 
 const clientRoutes = [
     {
@@ -41,6 +43,10 @@ const commonRoutes = [
     {
         path:'/confirm',
         component:<ConfirmEmail/>
+    },
+    {
+        path:'/orders/:id',
+        component:<Order/>
     }
 ];
 

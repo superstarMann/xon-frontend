@@ -118,10 +118,13 @@ export const ShareMusle = () => {
             history.push(`/orders/${orderId}`)
         }
     }
-    const [createOrderMutation] = useMutation<createOrder, createOrderVariables>(CREATE_ORDER_MUTATION,
+    const [createOrderMutation, {loading}] = useMutation<createOrder, createOrderVariables>(CREATE_ORDER_MUTATION,
         {onCompleted})
 
     const onConfirmBtn = () => {
+        if(loading){
+            return
+        }
         if(orderItems.length === 0 ) {
             alert(`Can't place empty order`)
             return
@@ -168,22 +171,22 @@ export const ShareMusle = () => {
                 <div className='lg:bg-gray-700'>
                     <div className='max-w-screen-2xl lg:text-white mx-auto px-5 lg:mt-10 pb-20'>
                         <h1 className='lg:text-3xl text-xl lg:font-medium'>Service</h1>
-                        <div className='flex flex-col items-end pb-5 text-lg mb-2'>
+                        <div className='flex flex-col items-end pb-5 text-lg text-white mt-3'>
                         {!orderStarted && (
-                            <button onClick={onTriggerOrder} className='bg-lime-500 rounded-lg px-5 py-2'>
+                            <button onClick={onTriggerOrder} className='bg-lime-500 rounded-lg lg:px-5 py-2 w-full lg:w-max'>
                                 Start Order
                             </button>
                         )}
                         {orderStarted && (
-                            <div>
+                            <div className='flex flex-col lg:flex-row lg:justify-end w-full'>
                                 <button 
                                 onClick={onConfirmBtn} 
-                                className='bg-lime-500 rounded-lg px-5 py-2 mr-4'>
+                                className='bg-lime-500 rounded-lg px-5 py-2 lg:mr-4 mb-2'>
                                 Confirm Order
                                 </button>
                                 <button 
                                 onClick={onCancelOrder}
-                                className='bg-red-500 rounded-lg px-5 py-2'>
+                                className='bg-red-500 rounded-lg px-5 py-2 lg:mb-2'>
                                     Cancel Order
                                 </button>
                             </div>
@@ -206,6 +209,7 @@ export const ShareMusle = () => {
                                 {dish.options?.map((option, index) => (
                                     <DishOption
                                     key={index}
+                                    extra={option.extra}
                                     name={option.name}
                                     dishId={dish.id}
                                     addOptionToItem={addOptionToItem}

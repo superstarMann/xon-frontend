@@ -210,6 +210,13 @@ export enum CountrySelect {
   Zimbabwe = "Zimbabwe",
 }
 
+export enum OrderStatus {
+  Arrived = "Arrived",
+  Going = "Going",
+  Pending = "Pending",
+  Protecting = "Protecting",
+}
+
 export enum UserRole {
   Guader = "Guader",
   User = "User",
@@ -268,6 +275,10 @@ export interface EditProfileInput {
   password?: string | null;
   role?: UserRole | null;
   countrySelect?: CountrySelect | null;
+}
+
+export interface GetOrderInput {
+  id: number;
 }
 
 export interface LoginInput {
