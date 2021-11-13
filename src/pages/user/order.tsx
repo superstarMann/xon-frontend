@@ -43,9 +43,31 @@ export const Order = () => {
     
     
     return(
-        <div>
-            <div>{data?.getOrder.order?.shareMusle?.name}</div>
-            {data?.getOrder.order?.total}
+        <div className='h-screen lg:bg-gray-700 flex flex-col lg:justify-center items-center'>
+            <div className='w-full max-w-screen-sm lg:text-white mt-12 px-5'>
+                <div className='rounded-lg border-2 border-gray-300 flex flex-col justify-center items-center'>
+                    <div className='border-b-2 text-xl text-center py-4 w-full bg-pink-700 text-white'>
+                        Order #{data?.getOrder.order?.id}
+                    </div>
+                    <div className='px-5 w-full text-left'>
+                        <div className='py-8 text-3xl border-b-2 text-center'>
+                            ${data?.getOrder.order?.total}
+                        </div>
+                        <div className='py-5 border-b-2 text-sm'>
+                        <span>Prepared By:</span>{" "}
+                        <span className='text-xl'>Real One</span>
+                        </div>
+                        <div className='py-5 border-b-2 text-sm'>
+                            <span>Guader To:</span>{" "}
+                            <span className='text-xl'>{data?.getOrder.order?.customer?.email}</span>
+                        </div>
+                        <div className='py-8 text-base text-center'>
+                            <span>Guader Status:</span>{" "}
+                            <span className='text-xl text-lime-500'>{data?.getOrder.order?.status}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     )
 }
