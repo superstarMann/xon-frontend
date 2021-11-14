@@ -148,22 +148,23 @@ export const ShareMusle = () => {
             <div className='h-screen lg:bg-gray-700'>
                 <div className='lg:bg-gray-700'>
                     <div className=' max-w-screen-2xl py-2 flex justify-center mx-auto lg:bg-gray-700'>
-                        <div className='grid lg:grid-cols-3 w-full lg:bg-gray-700 px-5'>
+                        <div className='grid lg:grid-cols-3 w-full lg:bg-gray-700 px-10'>
                             <div className='bg-red-500 bg-cover bg-center lg:mt-10 py-40 lg:py-60 rounded-2xl'
                             style={{backgroundImage:`url(${data?.shareMusle.shareMusle?.coverImg})`}}></div>
-                            <div className='flex flex-col lg:text-white justify-center lg:bg-gray-700 rounded-xl py-5'>
+                            <div className='flex flex-col lg:text-white lg:bg-gray-700 rounded-xl py-5 justify-end'>
                                 <div className='lg:pl-20'>
                                     <h4 className='font-semibold text-2xl lg:text-4xl mb-4'>{data?.shareMusle.shareMusle?.name}</h4>
                                       <div className='text-left flex flex-col gap-y-2'>
-                                        <h5 className='font-normal text-base lg:text-2xl'>01051741436</h5>
-                                        <h6 className='font-normal text-base lg:text-2xl'>{data?.shareMusle.shareMusle?.address}</h6>
-                                        <h6 className='font-normal text-base lg:text-2xl'>{data?.shareMusle.shareMusle?.country?.name}</h6>
+                                        <h5 className='font-normal text-base lg:text-2xl'>Phone: 01051741436</h5>
+                                        <h6 className='font-normal text-base lg:text-2xl'>Adress: {data?.shareMusle.shareMusle?.address}</h6>
+                                        <h6 className='font-normal text-base lg:text-2xl'>Country: {data?.shareMusle.shareMusle?.country?.name}</h6>
                                     </div>
                                 </div>
                             </div>
                             <div className='text-white'>
                                 <div className='bg'>Description</div>
                                 <div>License</div>
+                                <div>Hobby</div>
                             </div>
                         </div>
                     </div>

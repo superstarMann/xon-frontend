@@ -75,7 +75,7 @@ export const ShareMusles = () => {
                 </form>
                 {!loading && (
                 <div className='lg:bg-gray-700'>
-                  <div className='max-w-screen-2xl mx-auto px-5 pt-5 lg:pt-10 lg:bg-gray-00 pb-20'>
+                  <div className='max-w-screen-2xl mx-auto px-5 lg:px-20 pt-5 lg:pt-10 lg:bg-gray-00 pb-24'>
                     <div className='overflow-x-auto'>
                     <div className='flex justify-evenly max-w-xs lg:max-w-screen-sm mx-auto '>
                         {data?.allCountries.countries?.map((country) => (
@@ -83,7 +83,7 @@ export const ShareMusles = () => {
                             <div className='flex flex-col items-center cursor-pointer group' key={country.id}>
                                 <div
                                 style={{backgroundImage:`url(${country.coverImg})`}}
-                                className='bg-cover w-12 h-12 rounded-full text-center group-hover:opacity-60 transition'
+                                className='bg-cover w-10 h-10 rounded-full text-center group-hover:opacity-60 transition'
                                 ></div>
                                 <span className='mt-1 text-sm text-center font-medium lg:text-white'>
                                     {country.name}

@@ -7,7 +7,7 @@ interface IProps{
   id?: number;
   name: string;
   price: string;
-  description: string;
+  description: string | null;
   isSelected?: boolean;
   orderStarted?: boolean;
   addItemToOrder?: (dishId: number) => void

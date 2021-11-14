@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Nophoto from '../img/nophoto.png';
 
 interface ISharemusleProps{
     id: string;
@@ -15,7 +14,7 @@ export const ShareMusle:React.FC<ISharemusleProps> = ({name, coverImg, countryNa
         <Link to={`/shareMusle/${id}`}>
         <div className='flex flex-col'>
             <div style={{backgroundImage: `url(${coverImg})`}}
-             className='bg-red-600 rounded-lg py-44 bg-cover bg-center transform hover:scale-105 transition'></div>
+             className='bg-red-600 rounded-lg py-40 bg-cover bg-center transform hover:scale-105 transition'></div>
              <h3 className='lg:text-white text-xl mt-2'>
                 {name}
             </h3>

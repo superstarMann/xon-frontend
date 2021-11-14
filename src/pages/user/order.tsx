@@ -1,8 +1,13 @@
-import React from 'react';
-import { useQuery } from '@apollo/client';
+import React, { useEffect } from 'react';
+import { useMutation, useQuery, useSubscription } from '@apollo/client';
 import gql from 'graphql-tag';
-import { useParams } from 'react-router';
+import { useHistory, useParams } from 'react-router';
 import { getOrder, getOrderVariables } from '../../api/getOrder';
+import { Helmet } from 'react-helmet-async';
+import { ORDER_FULL_FRAGMENT } from '../../fragments';
+import { updateOrders } from '../../api/updateOrders';
+import { useMe } from '../../usehook/useMe';
+import { deleteOrder, deleteOrderVariables } from '../../api/deleteOrder';
 
 const GET_ORDER_QUERY = gql`
  query getOrder($input: GetOrderInput!){
@@ -10,20 +15,28 @@ const GET_ORDER_QUERY = gql`
         ok
         error
         order{
-            id
-            status
-            total
-            driver{
-                email
-            }
-            customer{
-                email
-            }
-            shareMusle{
-                name
-            }
+            ...OrderFull
         }
     }
+ }
+ ${ORDER_FULL_FRAGMENT}
+`
+
+const ORDER_SUBSCRIPTION = gql`
+ subscription updateOrders($input: UpdateOrderInput!){
+    updateOrders(input: $input){
+        ...OrderFull
+    }
+ }
+ ${ORDER_FULL_FRAGMENT}
+`
+
+const DELETE_ORDER = gql`
+ mutation deleteOrder($input: DeleteOrderInput!){
+     deleteOrder(input: $input){
+        ok
+        error
+     }
  }
 `
 
@@ -33,17 +46,61 @@ interface IProps{
 
 export const Order = () => {
     const params = useParams<IProps>()
-    const {data} = useQuery<getOrder, getOrderVariables>(GET_ORDER_QUERY, {
+    const history = useHistory();
+    const {data: userData} = useMe();
+    const {data, subscribeToMore} = useQuery<getOrder, getOrderVariables>(GET_ORDER_QUERY, {
         variables:{
             input:{
                 id: +params.id
             }
         }
     })
-    
+    const onCompleted = (data: deleteOrder) => {
+        const {deleteOrder: {ok}} = data
+        if(ok){
+            history.goBack()
+        }
+    }
+    const [deleteMutation] = useMutation<deleteOrder, deleteOrderVariables>(DELETE_ORDER,{
+        onCompleted
+    })
+    const onClick = () => {
+        deleteMutation({
+            variables:{
+                input:{
+                    orderId: +params.id
+                }
+            }
+        })
+    }
+
+    useEffect(() => {
+        if(data?.getOrder.ok){
+            subscribeToMore({
+                document: ORDER_SUBSCRIPTION,
+                variables:{
+                    input:{
+                        id: +params.id
+                    }
+                },
+                updateQuery:(prev, {subscriptionData: {data}}: {subscriptionData: {data: updateOrders}}) => {
+                    if(!data) return prev;
+                    return{
+                        getOrder:{
+                            ...prev.getOrder,
+                            order:{
+                                ...data.updateOrders
+                            }
+                        }
+                    }
+                }
+            })
+        }
+    },[data])
     
     return(
         <div className='h-screen lg:bg-gray-700 flex flex-col lg:justify-center items-center'>
+            <Helmet><title>{`Order #${data?.getOrder.order?.id} | XON`}</title></Helmet>
             <div className='w-full max-w-screen-sm lg:text-white mt-12 px-5'>
                 <div className='rounded-lg border-2 border-gray-300 flex flex-col justify-center items-center'>
                     <div className='border-b-2 text-xl text-center py-4 w-full bg-pink-700 text-white'>
@@ -55,7 +112,7 @@ export const Order = () => {
                         </div>
                         <div className='py-5 border-b-2 text-sm'>
                         <span>Prepared By:</span>{" "}
-                        <span className='text-xl'>Real One</span>
+                        <span className='text-xl'>{data?.getOrder.order?.shareMusle?.name}</span>
                         </div>
                         <div className='py-5 border-b-2 text-sm'>
                             <span>Guader To:</span>{" "}
@@ -63,8 +120,23 @@ export const Order = () => {
                         </div>
                         <div className='py-8 text-base text-center'>
                             <span>Guader Status:</span>{" "}
-                            <span className='text-xl text-lime-500'>{data?.getOrder.order?.status}</span>
+                            <span className='text-xl text-lime-500'>{data?.getOrder.order?.status}</span>   
                         </div>
+                        {data?.getOrder.order?.status === 'Pending' && (
+                        <div className='pb-10 text-base text-center'>
+                           <button onClick={onClick} className='bg-red-500 text-sm lg:text-lg font-medium px-5 py-2'>Canncel Order</button>
+                        </div>
+                        )}
+                        {userData?.me.role === "Guader" && (
+                            <>
+                            {data?.getOrder.order?.status === "Pending" && (
+                                <div className='pb-10 text-base text-center'>
+                                <button className='bg-lime-500 text-sm lg:text-lg font-medium px-5 py-2 mr-2'>Accept Order</button>
+                                <button onClick={onClick} className='bg-red-500 text-sm lg:text-lg font-medium px-5 py-2'>Canncel Order</button>
+                                </div>
+                            )}
+                            </>
+                        )}
                     </div>
                 </div>
             </div>

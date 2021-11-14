@@ -259,6 +259,14 @@ export interface CreateShareMusleInput {
   countryName: string;
 }
 
+export interface DeleteDishInput {
+  dishId: number;
+}
+
+export interface DeleteOrderInput {
+  orderId: number;
+}
+
 export interface DishChoiceInputType {
   name: string;
   extra?: number | null;
@@ -306,6 +314,10 @@ export interface ShareMusleInput {
 
 export interface ShareMuslesInput {
   page?: number | null;
+}
+
+export interface UpdateOrderInput {
+  id: number;
 }
 
 export interface VerifyEmailInput {

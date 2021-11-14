@@ -1,14 +1,16 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import gql from 'graphql-tag';
-import { DISH_FRAGMENT, ORDER_FRAGMENT, SHAREMUSLE_FRAGMENT } from '../../fragments';
-import { useQuery } from '@apollo/client';
-import { useParams } from 'react-router';
+import { DISH_FRAGMENT, ORDER_FRAGMENT, ORDER_FULL_FRAGMENT, SHAREMUSLE_FRAGMENT } from '../../fragments';
+import { useMutation, useQuery, useSubscription } from '@apollo/client';
+import { useHistory, useParams } from 'react-router';
 import { Link } from 'react-router-dom';
 import { myShareMusle, myShareMusleVariables } from '../../api/myShareMusle';
 import { Helmet } from 'react-helmet-async';
 import { Dish } from '../../component/dish';
 import { VictoryChart, VictoryAxis, VictoryVoronoiContainer, VictoryLine, VictoryLabel, VictoryTooltip } from 'victory'
 import { DishOption } from '../../component/dishOption';
+import { pendingOrders } from '../../api/pendingOrders';
+import { deleteDish, deleteDishVariables } from '../../api/deleteDish';
 
 export const MY_SHAREMUSLE_QUERY = gql`
  query myShareMusle($input: MyShareMusleInput!){
@@ -30,6 +32,22 @@ export const MY_SHAREMUSLE_QUERY = gql`
  ${DISH_FRAGMENT}
  ${ORDER_FRAGMENT}
 `
+const PENDING_ORDERS = gql`
+subscription pendingOrders{
+    pendingOrders{
+        ...OrderFull
+    }
+}
+${ORDER_FULL_FRAGMENT}
+`
+
+const DELETE_SERVICES = gql`
+  mutation deleteDish($input: DeleteDishInput!){
+      deleteDish(input: $input){
+          ok
+      }
+  }
+`
 
 interface IParamsProps{
     id: string;
@@ -37,6 +55,7 @@ interface IParamsProps{
 
 export const MyshareMusle = () => {
     const {id} = useParams<IParamsProps>()
+    const history = useHistory();
     const {data} = useQuery<myShareMusle, myShareMusleVariables>(MY_SHAREMUSLE_QUERY,{
         variables:{
             input:{
@@ -44,6 +63,25 @@ export const MyshareMusle = () => {
             }
         }
     })
+    const {data: subscriptionData} = useSubscription<pendingOrders>(PENDING_ORDERS)
+    useEffect(() => {
+        if(subscriptionData?.pendingOrders.id){
+            history.push(`/orders/${subscriptionData.pendingOrders.id}`)
+        }
+    },[subscriptionData])
+
+    const [deleteDishMutation] = useMutation<deleteDish, deleteDishVariables>(DELETE_SERVICES)
+    const onClick = () => {
+        deleteDishMutation({
+            variables:{
+                input:{
+                    dishId: +id
+                }
+            }
+        })
+    }
+
+    console.log(id)
 
     return(
         <div className='lg:bg-gray-600 h-screen'>
@@ -53,7 +91,7 @@ export const MyshareMusle = () => {
                     <div 
                     style={{backgroundImage: `url(${data?.myShareMusle.shareMusle?.coverImg})`}}
                     className='bg-yellow-300 py-48 rounded-lg bg-cover bg-center'></div>
-                    <div className='lg:text-white lg:px-10 flex flex-col justify-center lg:gap-y-4 gap-y-2'>
+                    <div className='lg:text-white lg:px-10 flex flex-col justify-end lg:gap-y-4 gap-y-2'>
                        <h2 className='font-semibold text-2xl lg:text-4xl'>{data?.myShareMusle.shareMusle?.name}</h2>
                        <h4 className='font-normal text-base lg:text-2xl'>Adress : {data?.myShareMusle.shareMusle?.address}</h4>
                        <h4 className='font-normal text-base lg:text-2xl'>Country : {data?.myShareMusle.shareMusle?.country?.name}</h4>
