@@ -14,6 +14,7 @@ import { AddShareMusle } from '../pages/owner/add-sharemusle';
 import { MyshareMusle } from '../pages/owner/my-shareMusle';
 import { AddService } from '../pages/owner/add-service';
 import { Order } from '../pages/user/order';
+import { UserRole } from '../api/globalTypes';
 
 
 const clientRoutes = [
@@ -80,10 +81,10 @@ export const LoggedInRouter = () => {
         <Router>
             <Header/>
             <Switch>
-                {data.me.role === "User" && clientRoutes.map((route) => (
+                {data.me.role === UserRole.User && clientRoutes.map((route) => (
                     <Route exact key={route.path} path={route.path}>{route.component}</Route>
                 ))}
-                {data.me.role === "Guader" && guaderRoutes.map((route) =>(
+                {data.me.role === UserRole.Guader && guaderRoutes.map((route) =>(
                     <Route exact key={route.path} path={route.path}>{route.component}</Route>
                 ))}
                 {commonRoutes.map((route) => (
