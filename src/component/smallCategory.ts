@@ -1,4 +1,3 @@
-
 export enum smallCategory{
     France = "France",
     China = 'China',
