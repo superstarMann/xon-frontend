@@ -8,7 +8,7 @@ import { useForm } from 'react-hook-form';
 import { SHAREMUSLE_FRAGMENT } from '../../fragments';
 import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
-import { Footer } from '../user/footer';
+
 
 
 const SHAREMUSLES_QUERY = gql`
@@ -82,10 +82,9 @@ export const ShareMusles = () => {
                           <Link key={country.id + ''} to={`/country/${country.slug}`}>
                             <div className='flex flex-col items-center cursor-pointer group' key={country.id}>
                                 <div
-                                style={{backgroundImage:`url(${country.coverImg})`}}
-                                className='bg-cover w-10 h-10 rounded-full text-center group-hover:opacity-60 transition'
-                                ></div>
-                                <span className='mt-1 text-sm text-center font-medium lg:text-white'>
+                                className='bg-cover w-10 h-10 text-5xl rounded-full text-center group-hover:opacity-60 transition'
+                                >{country.coverImg}</div>
+                                <span className='mt-1 pl-3 text-sm text-center font-medium lg:text-white'>
                                     {country.name}
                                 </span>
                             </div>
@@ -117,7 +116,6 @@ export const ShareMusles = () => {
                 </div>
                 </div>
                 )}
-                <Footer/>
         </div>
     )
     }

@@ -49,7 +49,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "stop": "Taskkill /IM node.exe /F"
+    "stop": "npx kill-port 3000"
   },
   "eslintConfig": {
     "extends": [

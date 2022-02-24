@@ -11,10 +11,11 @@ export const Header = () =>{
         }
         setTimeout(sayHi, 10000);
     },[])*/
+    //!data.me.verified 로 나중에 변경
     const {data} = useMe();
     return(
         <>
-        {!data?.me.verified && (
+        {data?.me.verified && (
             <div className='bg-yellow-50 flex justify-center py-3 items-center'>
                 <span className='text-blue-600 text-xs font-semibold'>
                     XON AI is checking your email

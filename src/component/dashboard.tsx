@@ -68,7 +68,7 @@ export const DashBoard = () => {
         <>
             <div
             className='rounded-lg overflow-hidden'
-            style={{height: "52vh", width: "100%"}}>
+            style={{height: "58vh", width: "100%"}}>
                 <GoogleMapReact
                 bootstrapURLKeys={{ key: "AIzaSyBbRtmQhCFlTdRBjJduovbO0qgdXAfbCNg"}}
                 defaultCenter={defaultCoords}
@@ -82,7 +82,7 @@ export const DashBoard = () => {
                     />
                 </GoogleMapReact>
             </div>
-                <button onClick={onGetRouteClick}>Get Route</button>
+                
         </>
     )
 }

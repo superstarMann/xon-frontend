@@ -141,12 +141,12 @@ export const ShareMusle = () => {
             })            
         }
     }
-    
+   
     return(
         <div>
             <Helmet><title>{`${data?.shareMusle.shareMusle?.name} | XON`}</title></Helmet>
-            <div className='h-screen lg:bg-gray-700'>
-                <div className='lg:bg-gray-700'>
+            <div className='h-screen lg:bg-gray-700 '>
+                <div className='lg:bg-gray-700  lg:px-16'>
                     <div className=' max-w-screen-2xl py-2 flex justify-center mx-auto lg:bg-gray-700'>
                         <div className='grid lg:grid-cols-3 w-full lg:bg-gray-700 px-10'>
                             <div className='bg-red-500 bg-cover bg-center lg:mt-10 py-40 lg:py-60 rounded-2xl'
@@ -161,25 +161,20 @@ export const ShareMusle = () => {
                                     </div>
                                 </div>
                             </div>
-                            <div className='text-white'>
-                                <div className='bg'>Description</div>
-                                <div>License</div>
-                                <div>Hobby</div>
-                            </div>
+                            
                         </div>
                     </div>
                 </div>
-                <div className='lg:bg-gray-700'>
-                    <div className='max-w-screen-2xl lg:text-white mx-auto px-5 lg:mt-10 pb-20'>
+                    <div className=' lg:px-24 max-w-screen-2xl lg:bg-gray-700 lg:text-white mx-auto px-5 lg:mt-10 pb-20'>
                         <h1 className='lg:text-3xl text-xl lg:font-medium'>Service</h1>
-                        <div className='flex flex-col items-end pb-5 text-lg text-white mt-3'>
+                        <div className='flex flex-col items-end pb-5 text-lg text-white mt-3 '>
                         {!orderStarted && (
                             <button onClick={onTriggerOrder} className='bg-lime-500 rounded-lg lg:px-5 py-2 w-full lg:w-max'>
                                 Start Order
                             </button>
                         )}
                         {orderStarted && (
-                            <div className='flex flex-col lg:flex-row lg:justify-end w-full'>
+                            <div className=' flex flex-col lg:flex-row lg:justify-end w-full'>
                                 <button 
                                 onClick={onConfirmBtn} 
                                 className='bg-lime-500 rounded-lg px-5 py-2 lg:mr-4 mb-2'>
@@ -193,6 +188,8 @@ export const ShareMusle = () => {
                             </div>
                         )}
                         </div>
+                        
+                        <div className='lg:bg-gray-700'>
                         <div className='grid lg:grid-cols-3 gap-x-5 gap-y-3'>
                             {data?.shareMusle.shareMusle?.menu.map((dish) => (
                             <Dish
@@ -227,3 +224,10 @@ export const ShareMusle = () => {
         </div>
     )
 }
+
+ /*<div className='text-white'>
+    <div className='bg'>Description</div>
+    <div>License</div>
+    <div>Hobby</div>
+</div>
+    */
