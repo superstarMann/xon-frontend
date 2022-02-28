@@ -1,0 +1,1 @@
+//!data.me.verified 로 나중에 변경

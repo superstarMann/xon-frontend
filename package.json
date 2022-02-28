@@ -20,6 +20,7 @@
     "@types/react-router-dom": "^5.3.0",
     "apollo": "^2.33.6",
     "autoprefixer": "^9.8.7",
+    "cross-env": "^7.0.3",
     "framer-motion": "^5.2.1",
     "google-map-react": "^2.1.10",
     "graphql": "^15.6.0",
@@ -43,11 +44,12 @@
     "web-vitals": "^1.1.2"
   },
   "scripts": {
-    "tailwind:build": "tailwind build ./src/styles/tailwind.css -o ./src/styles/styles.css",
+    "tailwind:probuild": "NODE_ENV=production npm run tailwind:build",
+    "tailwind:build": "cross-env tailwind build ./src/styles/tailwind.css -o ./src/styles/styles.css",
     "start": "npm run apollo:codegen & npm run tailwind:build & react-scripts start",
     "apollo:codegen": "rimraf src/api && npx apollo client:codegen src/api --target=typescript --outputFlat",
     "build": "CI=false react-scripts build",
-    "prebuild": "npm run tailwind:build",
+    "prebuild": "npm run tailwind:probuild",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "stop": "npx kill-port 3000"
