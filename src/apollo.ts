@@ -30,7 +30,7 @@ const authLink = setContext((_, {headers}) =>{
     },
   };
 })
-
+ 
 const splitLink = split(
   ({ query }) => {
     const definition = getMainDefinition(query);
