@@ -45,7 +45,7 @@
   },
   "scripts": {
     "tailwind:probuild": "NODE_ENV=production npm run tailwind:build",
-    "tailwind:build": "cross-env tailwind build ./src/styles/tailwind.css -o ./src/styles/styles.css",
+    "tailwind:build": "tailwind build ./src/styles/tailwind.css -o ./src/styles/styles.css",
     "start": "npm run apollo:codegen & npm run tailwind:build & react-scripts start",
     "apollo:codegen": "rimraf src/api && npx apollo client:codegen src/api --target=typescript --outputFlat",
     "build": "CI=false react-scripts build",
