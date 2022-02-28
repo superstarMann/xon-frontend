@@ -46,8 +46,8 @@
     "tailwind:build": "tailwind build ./src/styles/tailwind.css -o ./src/styles/styles.css",
     "start": "npm run apollo:codegen & npm run tailwind:build & react-scripts start",
     "apollo:codegen": "rimraf src/api && npx apollo client:codegen src/api --target=typescript --outputFlat",
-    "build": "react-scripts build",
-    "pre:build": "npm run tailwind:build",
+    "build": "CI=false react-scripts build",
+    "prebuild": "npm run tailwind:build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "stop": "npx kill-port 3000"
